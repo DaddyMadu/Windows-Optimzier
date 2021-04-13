@@ -1,2 +1,3 @@
 # Windows-Optimzier
-shortened URL https://git.io/JOLBr
+shortened URL for Encoded code https://git.io/JOLBr
+shortened URL for updater https://git.io/JOYeU
