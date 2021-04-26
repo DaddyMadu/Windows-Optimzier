@@ -4,6 +4,7 @@
 - Link for ZIP https://git.io/JOZDd Pass is:DaddyMadu
 #Luncher Updater
 - Shortened URL For Luncher Updater https://git.io/JOFKV
+- Shortened URL For Lucher https://git.io/JOFPg
 
 # App Installer
 - Shortened URL for Encoded code https://git.io/JO9MJ
