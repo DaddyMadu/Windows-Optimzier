@@ -12,4 +12,4 @@
 # App Installer
 - Shortened URL for Encoded code https://git.io/JO9MJ
 - Shortened URL for AppUpdater https://git.io/JO91Q
-- changelog URL https://git.io/JONPi
+- Changelog URL https://git.io/JONPi
