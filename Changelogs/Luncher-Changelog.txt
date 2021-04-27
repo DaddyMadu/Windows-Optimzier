@@ -1,4 +1,4 @@
 Changelog!
-April 27,2021 v2.0.3
-- Adding more apps to Autmated Apps Installer.
-- Optimizing code for more effcient run.
+April 27,2021 v2.0.4
+- New Download Method.
+- Showing Changelog In the same window.
