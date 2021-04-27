@@ -1,4 +1,4 @@
 Changelog!
-April 27,2021 v2.0.4
+April 27,2021
 - New Download Method.
 - Showing Changelog In the same window.
