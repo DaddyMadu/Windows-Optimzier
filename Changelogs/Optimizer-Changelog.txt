@@ -1,4 +1,4 @@
 Changelog!
-April 27,2021 v4.7.6
+April 27,2021
 - Adding more apps to Autmated Apps Installer.
 - Optimizing code for more effcient run.
