@@ -1,4 +1,4 @@
 Changelog!
 April 27,2021
-- Adding more apps to Autmated Apps Installer.
+- Adding Ask for applying google DNS if you have download issues.
 - Optimizing code for more effcient run.
