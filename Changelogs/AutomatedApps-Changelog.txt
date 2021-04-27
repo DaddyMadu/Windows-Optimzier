@@ -1,4 +1,7 @@
 Changelog!
 April 27,2021
-- Adding more apps to Autmated Apps Installer.
+- Adding Massive Apps library to Autmated Apps Installer.
+- removed auto updates enforcing!
+- add optional updates question.
+- fixing minor issue regarding upgrades.
 - Optimizing code for more effcient run.
