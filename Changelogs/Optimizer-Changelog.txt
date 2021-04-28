@@ -1,4 +1,5 @@
 Changelog!
 April 27,2021
+- Fixing issues when gameloop trying to remount drives after installation.
 - Adding Ask for applying google DNS if you have download issues.
 - Optimizing code for more effcient run.
