@@ -1,4 +1,5 @@
 Changelog!
-April 27,2021
+April 28,2021
+- Adding temp folder to Windows Defender Exclusion List.
 - New Download Method.
 - Showing Changelog In the same window.
