@@ -1,4 +1,8 @@
 Changelog!
+May 1,2021
+- Added better interactive messages.
+- Fix issue DNS was set but a false message was showing!
+
 April 28,2021
 - Fixing issues when gameloop trying to remount drives after installation.
 - Applying google DNS default answer is now set Accepted.
