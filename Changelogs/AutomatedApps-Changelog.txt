@@ -1,4 +1,7 @@
 Changelog!
+May 04,2021
+- Fix an issue with VirualBox installation.
+
 April 27,2021
 - Adding Massive Apps library to Autmated Apps Installer.
 - removed auto updates enforcing!
