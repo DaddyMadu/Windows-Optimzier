@@ -1,4 +1,7 @@
 Changelog!
+May 4,2021
+- Faster Access To Automated Apps instead of redownloading applist each time!
+
 May 1,2021
 - Added better interactive messages.
 - Fix issue DNS was set but a false message was showing!
