@@ -1,4 +1,8 @@
 Changelog!
+May 07,2021
+- Added SyncBackFree to Apps List.
+- Added Free Download Manager to Apps List.
+
 May 04,2021
 - Fixed an issue with VirualBox installation.
 - Added clear user interaction messages.
