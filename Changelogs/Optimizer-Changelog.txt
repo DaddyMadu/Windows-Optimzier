@@ -5,6 +5,7 @@ May 8,2021
 - Moving Gameloop Optimizer to Games Optimization Menu.
 - Added Optimization Option for VALORANT game.
 - Limiting changelog to show only Latest 20 lines.
+- Script will add it's own temp folder to windows defender exclusion list.
 
 May 4,2021
 - Faster Access To Automated Apps instead of redownloading applist each time!
