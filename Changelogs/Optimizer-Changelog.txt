@@ -1,4 +1,11 @@
 Changelog!
+May 8,2021
+- Re-arranged Main Menu!
+- Added New Menu for Games Optimization.
+- Moving Gameloop Optimizer to Games Optimization Menu.
+- Added Optimization Option for VALORANT game.
+- Limiting changelog to show only Latest 20 lines.
+
 May 4,2021
 - Faster Access To Automated Apps instead of redownloading applist each time!
 
