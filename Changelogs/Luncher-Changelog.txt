@@ -1,4 +1,8 @@
 Changelog!
+May 8,2021
+- Limiting Changelog to Only Show latest 20 Lines.
+- Fixing Typo.
+
 April 28,2021
 - Adding temp folder to Windows Defender Exclusion List.
 - New Download Method.
