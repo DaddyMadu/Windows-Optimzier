@@ -1,6 +1,8 @@
 Changelog!
 May 11,2021
-- Script Now can run offline if you arleady have a previous version avaliable in temp.
+- Script Now can run offline* if you arleady have a previous version avaliable in temp.
+*this will only be functional for offline assets like clear temp and game optimization
+that requires no active internet connection!
 
 May 8,2021
 - Limiting Changelog to Only Show latest 20 Lines.
