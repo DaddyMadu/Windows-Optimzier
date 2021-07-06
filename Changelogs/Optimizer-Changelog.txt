@@ -1,4 +1,9 @@
 Changelog!
+
+July 6,2021
+- Removed Gameloop Force Temp On C Drive as it causes more issues,
+and there's already option to move temp to any drive you want!
+
 May 8,2021
 - Re-arranged Main Menu!
 - Added New Menu for Games Optimization.
