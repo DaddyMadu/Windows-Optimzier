@@ -1,4 +1,8 @@
 Changelog!
+Dec 2,2021
+- Deconding all the files, so we can edit and maintain them faster.
+hopfully for the best and no one rebranding them for thier own benefit! 
+
 May 11,2021
 - Script Now can run offline* if you arleady have a previous version avaliable in temp.
 *this will only be functional for offline assets like clear temp and game optimization
