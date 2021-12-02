@@ -451,7 +451,7 @@ call %CallAppsInstallorUninstall%
 goto :eof 
 :option-62 
 cls 
-set "Package=geforce-game-ready-driver" 
+set "Package=geforce-game-ready-driver --params "'/DCH'"" 
 call %CallAppsInstallorUninstall% 
 goto :eof 
 :option-63 
