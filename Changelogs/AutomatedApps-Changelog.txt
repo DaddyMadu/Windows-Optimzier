@@ -2,6 +2,7 @@ Changelog!
 
 Dec 2,2021
 - fixed bug nvidia driver won't accept dch parameter when auto upgrade pakages.
+- fixed bug with nvidia game ready driver was not install using dch para.
 
 November 05,2021
 - Forced Nvidia Friver to DCH only.
