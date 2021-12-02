@@ -2,7 +2,7 @@
 mode 200 
 title [ Daddy Madu ] Autmated Apps Installer! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.0.5" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.0.6" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedApps') do @set "CurrentVersion=%%z" 
 cd /d "%systemdrive%\Windows\System32" 
 ECHO =============================================================================================  
@@ -17,6 +17,7 @@ cls
 setlocal enableDelayedExpansion 
 echo Getting Things Ready, Please Wait... 
 powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))">nul 2>&1 && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin" 
+powershell -NoProfile -ExecutionPolicy Bypass -Command "choco feature enable -n=useRememberedArgumentsForUpgrades"
 :AppsUtilityMenu 
 cls 
 echo ... Welcome %username% to DaddyMadu Autmated Apps Installer^/Uninstaller ... 
