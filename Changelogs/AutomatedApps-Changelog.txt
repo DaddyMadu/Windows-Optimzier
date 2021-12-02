@@ -5,7 +5,7 @@ Dec 2,2021
 - fixed bug with nvidia game ready driver was not install using dch para.
 
 November 05,2021
-- Forced Nvidia Friver to DCH only.
+- Forced Nvidia Driver to DCH only.
 
 May 07,2021
 - Added SyncBackFree to Apps List.
