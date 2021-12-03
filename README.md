@@ -67,6 +67,8 @@ here's what you will expect when using this tool
 7. Fix Start Menu issues
 8. Fix and Rebuild Icons
 9. Games Optimizer
+> 1. Gameloop Optimizer
+> 2. Valorant
 
 
 
