@@ -1,5 +1,5 @@
-**Welcome to AIO Windows Optimizer and App Installer Script.
-**
+**Welcome to AIO Windows Optimizer and App Installer Script**
+
 here's what you will expect when using this tool 
 
 1. Clear All TEMP folders, logs, chks, Caches and Fix DNS problems
