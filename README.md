@@ -75,7 +75,9 @@ here's what you will expect when using this tool
 >> 4. Gameloop TEMP Mover!
 >> 5. Fix for after Gameloop Force Temp C, Drives Not Showing
 > 2. Valorant
-
+>> 1. Apply Optimization
+>> 2. Remove Optimization
+>> 3. Fix Game Freeze when ALT+TAB
 
 
 
