@@ -9,7 +9,9 @@ here's what you will expect when using this tool
 5. Automated Apps Installer - Beta
 > 1. Install Apps
 > 2. Uninstall Apps
+
 **Both install and uninstall shares the following** 
+
 > === Essentials ===                        === Internet Tools ===                        === Communications ===
 > 
 > [1] Microsoft Visual C++ 2005-2019        [2] Mozilla Firefox                           [3] Telegram
