@@ -68,6 +68,12 @@ here's what you will expect when using this tool
 8. Fix and Rebuild Icons
 9. Games Optimizer
 > 1. Gameloop Optimizer
+>> 1. Force Stop All Gameloop Emulator Process
+>> 2. Gameloop Emulator Optimization for no FPS Drop
+>> TYPE "remove". Compelete Uninstall Gameloop Emulator Leftovers
+>> 3. Install Latest Gameloop from Official Link Gameloop.com
+>> 4. Gameloop TEMP Mover!
+>> 5. Fix for after Gameloop Force Temp C, Drives Not Showing
 > 2. Valorant
 
 
