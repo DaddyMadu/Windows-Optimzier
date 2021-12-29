@@ -2,7 +2,7 @@
 mode 200 
 title [ Daddy Madu ] Autmated Apps Installer! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.0.7" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.0.8" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedApps') do @set "CurrentVersion=%%z" 
 cd /d "%systemdrive%\Windows\System32" 
 ECHO =============================================================================================  
@@ -108,7 +108,7 @@ echo [59] NVidia Driver Striped                [60] Java SE Runtime Environment 
 echo [62] NVidia Driver Gforce Experience      [77] Java Uninstall Tool                      [64] Autoruns 
 echo [65] Snappy Driver Installer Origin       [66] qBittorrent                              [67] Sysinternals  
 echo [68] Intel Network Adapter Driver W10     [69] Rufus                                    [70] Process Explorer 
-echo [71] Display Driver Uninstaller           [72] Hex Editor and Disk Editor 
+echo [71] Display Driver Uninstaller           [72] Hex Editor and Disk Editor               [80] DNSCrypt-Proxy 
 echo                                           [73] LockHunter 
 echo                                           [74] uBlock Origin for Chrome 
 echo                                           [75] Macrium Reflect Free 
@@ -537,6 +537,11 @@ goto :eof
 :option-79 
 cls 
 set "Package=freedownloadmanager" 
+call %CallAppsInstallorUninstall% 
+goto :eof 
+:option-80 
+cls 
+set "Package=dnscrypt-proxy" 
 call %CallAppsInstallorUninstall% 
 goto :eof 
 :DaddyMaduAutoAppInstallerFromConfig 
