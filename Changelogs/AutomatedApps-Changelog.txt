@@ -1,5 +1,8 @@
 Changelog!
 
+Dec 29,2021
+-added DNSCrypt Proxy to support DNS Over HTTPS, ODOH, DNSCRYPT Protocols.
+
 Dec 2,2021
 - fixed bug nvidia driver won't accept dch parameter when auto upgrade pakages.
 - fixed bug with nvidia game ready driver was not install using dch para.
