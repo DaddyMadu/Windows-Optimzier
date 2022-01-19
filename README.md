@@ -1,4 +1,4 @@
-**Welcome to AIO Windows Optimizer and App Installer Script**
+**Welcome to AIO Windows 10/11 Optimizer and App Installer Script**
 
 here's what you will expect when using this tool 
 
@@ -63,7 +63,7 @@ here's what you will expect when using this tool
 > 3. Manually Update All Installed Apps
 > 4. Save Current Config to Desktop
 > 5. Load and Auto Install Apps from Config
-6. Windows 10 Gaming Focus Full Tweaker and Debloater
+6. Windows 10/11 Gaming Focus Full Tweaker and Debloater
 7. Fix Start Menu issues
 8. Fix and Rebuild Icons
 9. Games Optimizer
