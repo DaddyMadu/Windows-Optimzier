@@ -1,5 +1,8 @@
 Changelog!
 
+Jan 31,2022
+-Allowing checksum to check for possible error before installing apps.
+
 Dec 29,2021
 -added DNSCrypt Proxy to support DNS Over HTTPS, ODOH, DNSCRYPT Protocols.
 
