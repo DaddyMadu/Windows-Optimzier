@@ -127,7 +127,7 @@ goto ASKCheckingForUpdate
 findstr /l /x /c:"%Package%" "%userprofile%\DaddyMaduAppsInstaller.config" >nul 2>&1 
 IF NOT ERRORLEVEL 1 goto :eof 
 echo installing %Package% Please Wait... 
-Choco install %Package% -y -r
+Choco install %Package% -y -r --allowemptychecksum --allowemptychecksumsecure
 del /f /s /q "%userprofile%\DaddyMaduAppsInstaller.config" >nul 2>&1 
 choco list -l -r --id-only > "%userprofile%\DaddyMaduAppsInstaller.config" 
 echo Done. 
@@ -548,14 +548,14 @@ goto :eof
 for /F "tokens=* USEBACKQ" %%i in (%userprofile%\DaddyMaduAppsInstaller.config) do ( 
 cls 
 echo Installing %%i Please Wait... 
-Choco install %%i -y -r
+Choco install %%i -y -r --allowemptychecksum --allowemptychecksumsecure
 echo Done, Installed Successfully. 
 ) 
 goto ASKCheckingForUpdate 
 :DaddyMaduAutoAppUpdater 
 cls 
 echo Checking for updates Please Wait, if found it will be installed shortly... 
-Choco upgrade all -y -r
+Choco upgrade all -y -r --allowemptychecksum --allowemptychecksumsecure
 echo Done. 
 goto EOFAPPInstaller 
 :SaveDaddyMaduConfig 
