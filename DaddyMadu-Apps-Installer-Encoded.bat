@@ -2,7 +2,7 @@
 mode 200 
 title [ Daddy Madu ] Autmated Apps Installer! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.0.9" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.1.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedApps') do @set "CurrentVersion=%%z" 
 cd /d "%systemdrive%\Windows\System32" 
 ECHO =============================================================================================  
@@ -127,7 +127,7 @@ goto ASKCheckingForUpdate
 findstr /l /x /c:"%Package%" "%userprofile%\DaddyMaduAppsInstaller.config" >nul 2>&1 
 IF NOT ERRORLEVEL 1 goto :eof 
 echo installing %Package% Please Wait... 
-Choco install %Package% -y -r --allowemptychecksum --allowemptychecksumsecure 
+Choco install %Package% -y -r
 del /f /s /q "%userprofile%\DaddyMaduAppsInstaller.config" >nul 2>&1 
 choco list -l -r --id-only > "%userprofile%\DaddyMaduAppsInstaller.config" 
 echo Done. 
