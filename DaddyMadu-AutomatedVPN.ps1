@@ -48,10 +48,7 @@ test-connection -ComputerName $vserver -Count 1 -ea 0 |
   }
 }
 Add-Member @ScriptProperty -InputObject $__lines 
-function Get-RandomServer {
-  $global:__lines.NextSentence
-}
-    $VPNServerAdress = Get-RandomServer
+    $VPNServerAdress = $global:__lines.NextSentence
     $VPNusername = "vpn"
     $VPNpassword = "vpn"
 	$VPNServername = "VPN"
