@@ -38,23 +38,10 @@ test-connection -ComputerName $vserver -Count 1 -ea 0 |
  measure responsetime -average |
  % {$_.average.tostring() + " $vserver"}}) |
  sort |% {$_.split()[1]} | out-file -FilePath "$env:USERPROFILE\VPNServersSorted.txt" -Append
-	
-  $__lines = get-content "$env:USERPROFILE\VPNServersSorted.txt"
-  $ScriptProperty = @{
-  Name = 'NextSentence'
-  MemberType = 'ScriptProperty' 
-  Value = {
-    return $this[++$global:__idx % @($this).Count]
-  }
-}
-Add-Member @ScriptProperty -InputObject $__lines 
-  function GetRandomServer (){
-  $global:__lines.NextSentence
-}
-    GetRandomServer | Tee-Object -Variable VPNServerAdress
+    get-content "$env:USERPROFILE\VPNServersSorted.txt" | sort{get-random} | select -First 1 | Tee-Object -Variable VPNServerAdress
     $VPNusername = "vpn"
     $VPNpassword = "vpn"
-	$VPNServername = "VPN"
+    $VPNServername = "VPN"
 if ((Get-VpnConnection).name -eq "VPN" ) {
 	Set-VpnConnection -Name VPN -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential:$true -SplitTunneling:$true -PassThru -ErrorAction SilentlyContinue | Out-Null
 	Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue | Out-Null
