@@ -23,6 +23,9 @@ if '%errorlevel%' NEQ '0' (
     pushd "%CD%"
     CD /D "%~dp0"
 
+echo Setting up DaddyMadu Auotmated VPN...
+powershell -c "Invoke-WebRequest 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-AutomatedVPN.ps1' -OutFile '%temp%\DaddyMadu-AutomatedVPN.ps1'"
+powershell -ExecutionPolicy RemoteSigned "%temp%\DaddyMadu-AutomatedVPN.ps1"
 echo Setting VPN Connection ready to connect without Confirmation...
 echo>%temp%\DisableAuthConfirmation.ps1 $content = [System.IO.File]::ReadAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk").Replace("PreviewUserPw=1","PreviewUserPw=0")
 echo>>%temp%\DisableAuthConfirmation.ps1 [System.IO.File]::WriteAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk", $content)
@@ -48,7 +51,7 @@ rasphone -d "VPN"
 Powershell Set-VpnConnection -Name "VPN" -SplitTunneling $True
 rasphone -h "VPN"
 rasphone -d "VPN"
-powershell -c "Get-NetAdapter -Physical | ForEach-Object { Set-DnsClientServerAddress $_.Name -ServerAddresses ('127.0.0.1') }"
+powershell -c "Get-NetAdapter -Physical | ForEach-Object { Set-DnsClientServerAddress $_.Name -ServerAddresses ('8.8.8.8') }"
 ECHO Starting Valorant Voip Routing...
 set ip="IP Address"
 rem set ip="IP Address"
