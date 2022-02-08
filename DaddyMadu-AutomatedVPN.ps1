@@ -51,6 +51,7 @@ Add-Member @ScriptProperty -InputObject $__lines
     function GetRandomServer {
   $global:__lines.NextSentence
 }
+    GetRandomServer
     $VPNServerAdress = GetRandomServer
     $VPNusername = "vpn"
     $VPNpassword = "vpn"
