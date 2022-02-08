@@ -96,3 +96,8 @@ here's what you will expect when using this tool
 - Shortened URL for Encoded code https://git.io/JO9MJ
 - Shortened URL for AppUpdater https://git.io/JON1H
 - Changelog URL https://git.io/JONPi
+
+# Automated VPN
+- Shortened URL for
+- Shortened URL for Updater
+- Changelog URL
