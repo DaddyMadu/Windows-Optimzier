@@ -29,7 +29,7 @@ if (Get-Module -ListAvailable -Name VPNCredentialsHelper) {
 	$VPNServersText = $VPNServersOut -replace 'SSTP Hostname :' -replace 'MS-SSTP' -replace 'Connect guide' | ForEach-Object { $_.Trim() }
 	foreach ($line in $VPNServersText) { 
     if ($line -like "*opengw*") {
-     $line | out-file -FilePath "C:\VPNServers.txt" -Append
+     $line | out-file -FilePath "$env:USERPROFILE\VPNServers.txt" -Append
     }
 }
 $unsortedservers = Get-Content "$env:USERPROFILE\VPNServers.txt"
