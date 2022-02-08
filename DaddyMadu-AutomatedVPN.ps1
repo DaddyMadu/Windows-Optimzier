@@ -1,6 +1,6 @@
 if ((Get-PackageProvider -Name NuGet).version -lt 2.8.5.208 ) {
     try {
-        echo Y | Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Confirm:$False -Force 
+        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Confirm:$False -Force 
     }
     catch [Exception]{
         $_.message 
@@ -14,7 +14,7 @@ if (Get-Module -ListAvailable -Name VPNCredentialsHelper) {
     Write-Host "VPNCredentialsHelper Already Installed"
 }  else {
     try {
-        echo Y | Install-Module -Name VPNCredentialsHelper -Confirm:$False -Force  
+        Install-Module -Name VPNCredentialsHelper -Confirm:$False -Force  
     }
     catch [Exception] {
         $_.message 
