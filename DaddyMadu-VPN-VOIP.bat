@@ -120,7 +120,7 @@ echo Setting up DaddyMadu Auotmated VPN...
 echo>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 if ((Get-PackageProvider -Name NuGet).version -lt 2.8.5.208 ) {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     try {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 		Write-Host "Checking if Nuget Package is installed..."
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Confirm:$False -Force 
+echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1         echo Y ^| Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Confirm:$False -Force 
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     catch [Exception]{
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1         $_.message 
