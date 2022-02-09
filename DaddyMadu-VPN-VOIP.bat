@@ -45,7 +45,7 @@ for %%i in ("%~0.") do SET "CurrentScriptPath=%%~fi"
 echo Currently Running From  %CurrentScriptPath% 
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%CurrentScriptPath%'">nul 2>&1 
 for /f "usebackq delims=" %%w in (` 
-powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckVPNVersion = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Updaters/Automated-VPN-Updater.txt"; $VPNVersion = ($CheckVPNVersion.Content | Out-String).Trim(); $VPNVersion" 
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckVPNVersion = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Updaters/Automated-VPN-Updater.txt'; $VPNVersion = ($CheckVPNVersion.Content | Out-String).Trim(); $VPNVersion" 
 `) do set "OnlineVPNVersion=%%w"
 echo checking internet connection
 Ping 1.1.1.1 -n 1 -w 1000
@@ -65,8 +65,8 @@ goto Continueaftervpnupdatecheck
 ) ELSE ( 
 cls 
 echo Automated VPN Update Found v%OnlineVPNVersion%, Updating NOW! 
-powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckUpdaterChangelog = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Changelogs/AutomatedVPN-Changelog.txt"; $AutomatedVPNChangelog = ($CheckUpdaterChangelog.Content | Out-String).Trim(); $AutomatedVPNChangelog.Split([Environment]::NewLine) | Select -First 20"
-timeout /t 20 
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckUpdaterChangelog = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Changelogs/AutomatedVPN-Changelog.txt'; $AutomatedVPNChangelog = ($CheckUpdaterChangelog.Content | Out-String).Trim(); $AutomatedVPNChangelog.Split([Environment]::NewLine) | Select -First 20"
+timeout /t 10 
 cls 
 goto downloadupdatevpn 
 ) 
@@ -89,7 +89,7 @@ GOTO alternativedownloadvpn2
 ) 
 :alternativedownloadvpn2 
 cls 
-powershell -c "Invoke-WebRequest https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat -OutFile %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" 
+powershell -c "Invoke-WebRequest 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat' -OutFile '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'" 
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 goto Continueaftervpnupdatedownloaded 
 ) ELSE ( 
@@ -174,14 +174,14 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Add-
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Write-Host "Done!"
-powershell -ExecutionPolicy Bypass "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1"
+powershell -ExecutionPolicy Bypass %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1
 echo Setting VPN Connection ready to connect without Confirmation...
 echo>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 $content = [System.IO.File]::ReadAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk").Replace("PreviewUserPw=1","PreviewUserPw=0")
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 [System.IO.File]::WriteAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk", $content)
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 $content = [System.IO.File]::ReadAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk").Replace("PreviewDomain=1","PreviewDomain=0")
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 [System.IO.File]::WriteAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk", $content)
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 Write-Host "Done!"
-powershell -ExecutionPolicy Bypass "%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1"
+powershell -ExecutionPolicy Bypass %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1
 powershell Start-Sleep -s 1
 powershell Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 -Force
 echo Setting VPN connection to accept split tunneling...
