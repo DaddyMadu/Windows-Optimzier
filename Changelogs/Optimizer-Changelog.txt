@@ -1,4 +1,7 @@
 Changelog!
+Feb 9,2022
+- Adding Automated VPN and VOIP Initial Script
+- Various Bug Fixs
 
 July 6,2021
 - Removed Gameloop Force Temp On C Drive as it causes more issues,
