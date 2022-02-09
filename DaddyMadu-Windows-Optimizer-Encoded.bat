@@ -19,6 +19,7 @@ echo 6. Windows 10 Gaming Focus Full Tweaker and Debloater
 echo 7. Fix Start Menu issues
 echo 8. Fix and Rebuild Icons
 echo 9. Games Optimizer
+echo 10. DaddyMadu Automated VPN and VOIP
 echo 999. Exit
 echo.
 Echo.
@@ -35,6 +36,7 @@ if %answer%==6 goto Windows10GamingFocus
 if %answer%==7 goto fixstartmenu
 if %answer%==8 goto rebuildicon
 if %answer%==9 goto GamesOptimizer
+if %answer%==10 goto AutomatedVPN
 if %answer%==999 goto Exit
 goto Menu
 :Exit
@@ -1210,3 +1212,82 @@ cls
 echo Valorant Game is Not Installed! Please Install The Game First From Official Installer!
 pause >nul
 goto GamesOptimizer
+:AutomatedVPN
+cls
+echo Getting Things Ready for you, Please Wait...
+IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" (
+goto choiceVPNAppInstaller
+) ELSE (
+GOTO VPNAppInstaller
+)
+:choiceVPNAppInstaller
+cls
+for /f "usebackq delims=" %%w in (`
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckAutomatedVPNAppsVersion = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Updaters/Automated-VPN-Updater.txt'; $AutomatedVPNAppsVersion = ($CheckAutomatedVPNAppsVersion.Content | Out-String).Trim(); $AutomatedVPNAppsVersion"
+`) do set "OnlineAutomatedVPNAppsVersion=%%w"
+for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedApps') do @set "AutomatedVPNAppsVersion=%%z"
+IF "%OnlineAutomatedVPNAppsVersion%" EQU "%AutomatedVPNAppsVersion%" (
+echo No Update Found, Lunching script!
+goto continueVPNAppInstaller
+) ELSE (
+echo Automated Apps Update Found v%OnlineAutomatedVPNAppsVersion%, Script is updating NOW!
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckAutomatedVPNAppsChangelog = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Changelogs/AutomatedVPN-Changelog.txt'; $AutomatedVPNAppsChangelog = ($CheckAutomatedVPNAppsChangelog.Content | Out-String).Trim(); $AutomatedVPNAppsChangelog.Split([Environment]::NewLine) | Select -First 20"
+timeout /t 20
+cls
+goto VPNAppInstaller
+)
+:VPNAppInstaller
+cls
+bitsadmin /transfer "Downloading Daddy Madu Automated VPN VOIP Latest Update" /priority FOREGROUND "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
+IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" (
+goto continueVPNAppInstaller
+) ELSE (
+GOTO alternativedownloadVPNAppInstaller
+)
+:alternativedownloadVPNAppInstaller
+cls
+powershell -c "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat', '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat')"
+IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" (
+goto continueVPNAppInstaller
+) ELSE (
+GOTO alternativedownload2VPNAppInstaller
+)
+:alternativedownload2VPNAppInstaller
+cls
+powershell -c "Invoke-WebRequest 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat' -OutFile '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'"
+IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" (
+goto continueVPNAppInstaller
+) ELSE (
+cls
+ECHO =============================================================================================
+echo Please Make Sure you DISABLED YOUR ANTIVIRUS and You HAVE INTERNET Avaliable!
+echo As something is BLOCKING script from downloading latest Version Avaliable!
+ECHO =============================================================================================
+echo Please Press ENTER KEY to try again!
+ECHO =============================================================================================
+pause >nul
+goto VPNAppInstaller
+)
+:continueVPNAppInstaller
+powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%userprofile%\Desktop\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
+cls
+for /f "delims== tokens=2" %%a in ('wmic os get osarchitecture /value') do (
+  set arch=%%a
+)
+if "%arch%"=="64-bit" (
+goto :x64VPNAppInstaller
+) else (
+goto :x86VPNAppInstaller
+)
+:x64VPNAppInstaller
+IF EXIST "%SystemRoot%\Sysnative\cmd.exe" (
+start %SystemRoot%\Sysnative\cmd.exe /c "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
+) ELSE (
+start %SystemRoot%\System32\cmd.exe /c "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
+)
+goto ExitDaddyMaduWindowsOptimizer
+:x86VPNAppInstaller
+start %SystemRoot%\System32\cmd.exe /c "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
+goto ExitDaddyMaduWindowsOptimizer
+:ExitDaddyMaduWindowsOptimizer
+Exit
