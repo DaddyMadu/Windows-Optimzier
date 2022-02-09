@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "1.1.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "1.2.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -120,7 +120,7 @@ echo Setting up DaddyMadu Auotmated VPN...
 echo>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 if ((Get-PackageProvider -Name NuGet).version -lt 2.8.5.208 ) {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     try {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 		Write-Host "Checking if Nuget Package is installed..."
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1         echo Y ^| Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Confirm:$False -Force 
+echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Force 
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     catch [Exception]{
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1         $_.message 
