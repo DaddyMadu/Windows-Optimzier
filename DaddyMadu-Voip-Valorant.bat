@@ -24,7 +24,63 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 
 echo Setting up DaddyMadu Auotmated VPN...
-powershell -c "Invoke-WebRequest 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-AutomatedVPN.ps1' -OutFile '%temp%\DaddyMadu-AutomatedVPN.ps1'"
+echo>%temp%\DaddyMadu-AutomatedVPN.ps1 if ((Get-PackageProvider -Name NuGet).version -lt 2.8.5.208 ) {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     try {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 		Write-Host "Checking if Nuget Package is installed..."
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.208 -Confirm:$False -Force 
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     catch [Exception]{
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1         $_.message 
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1         exit
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 } else {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     Write-Host "Version of NuGet installed = " (Get-PackageProvider -Name NuGet).version
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 if (Get-Module -ListAvailable -Name VPNCredentialsHelper) {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     Write-Host "VPNCredentialsHelper Already Installed"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 }  else {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     try {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 		Write-Host "VPNCredentialsHelper is not found, trying to install it..."
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1         Install-Module -Name VPNCredentialsHelper -Confirm:$False -Force  
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     catch [Exception] {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1         $_.message 
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1         exit
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	Remove-Item -Path "$env:USERPROFILE\VPNServers.txt" -Force -Recurse -ErrorAction SilentlyContinue
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	Remove-Item -Path "$env:USERPROFILE\VPNServersSorted.txt" -Force -Recurse -ErrorAction SilentlyContinue
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	Write-Host "Old VPN Servers list is deleted successfully, Fetching latest avaliable servers..."
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	$VPNServerURI = "https://www.vpngate.net/en/"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     $VPNServerHTML = Invoke-WebRequest -Uri $VPNServerURI
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     $VPNServersOut = ($VPNServerHTML.ParsedHtml.getElementsByTagName("td") ^| Where-Object{$_.className -eq "vg_table_row_1"}).innerText ^| select-string -CaseSensitive "SSTP Hostname :"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	$VPNServersText = $VPNServersOut -replace 'SSTP Hostname :' -replace 'MS-SSTP' -replace 'Connect guide' ^| ForEach-Object { $_.Trim() }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	foreach ($line in $VPNServersText) { 
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     if ($line -like "*opengw*") {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1      $line ^| out-file -FilePath "$env:USERPROFILE\VPNServers.txt" -Append
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 $unsortedservers = Get-Content "$env:USERPROFILE\VPNServers.txt"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 Write-Host "Pinging fetched vpn servers and removing dead ones..."
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 @(foreach ($vserver in $unsortedservers){
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 test-connection -ComputerName $vserver -Count 1 -ea 0 ^|
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1  measure responsetime -average ^|
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1  %% {$_.average.tostring() + " $vserver"}}) ^|
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1  sort ^|%% {$_.split()[1]} ^| out-file -FilePath $env:USERPROFILE\VPNServersSorted.txt -Append
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     get-content "$env:USERPROFILE\VPNServersSorted.txt" ^| sort{get-random} ^| select -First 1 ^| Tee-Object -Variable VPNServerAdress ^| Out-Null
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     $VPNusername = "vpn"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     $VPNpassword = "vpn"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     $VPNServername = "VPN"
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 if ((Get-VpnConnection).name -eq "VPN" ) {
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	Write-Host "VPN Connection found! updating it with the latest fetched vpn server..."
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	Set-VpnConnection -Name VPN -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential:$true -SplitTunneling:$true -PassThru -ErrorAction SilentlyContinue ^| Out-Null
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 	Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue ^| Out-Null
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 } else { 
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     Write-Host "VPN Connection was not found! adding new one with the latest fetched vpn server..."
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     Add-VpnConnection -Name $VPNServername -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential:$true -SplitTunneling:$true -PassThru -ErrorAction SilentlyContinue ^| Out-Null
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1     Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue ^| Out-Null
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 }
+echo>>%temp%\DaddyMadu-AutomatedVPN.ps1 Write-Host "Done!"
 powershell -ExecutionPolicy RemoteSigned "%temp%\DaddyMadu-AutomatedVPN.ps1"
 echo Setting VPN Connection ready to connect without Confirmation...
 echo>%temp%\DisableAuthConfirmation.ps1 $content = [System.IO.File]::ReadAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk").Replace("PreviewUserPw=1","PreviewUserPw=0")
