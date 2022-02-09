@@ -184,6 +184,7 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 Write-H
 powershell -ExecutionPolicy Bypass %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1
 powershell Start-Sleep -s 1
 powershell Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 -Force
+powershell Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 -Force
 echo Setting VPN connection to accept split tunneling...
 :CheckVPNStatus
 for /f "usebackq delims=" %%w in (` 
