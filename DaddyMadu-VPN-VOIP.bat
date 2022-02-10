@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.1" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.2" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -206,8 +206,8 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 [System
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 Write-Host "Done!"
 powershell -ExecutionPolicy Bypass %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1
 powershell Start-Sleep -s 1
-powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 -Force -ea0 | Out-Null"
-powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 -Force -ea0 | Out-Null"
+powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 -Force -ea silentlycontinue | Out-Null"
+powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 -Force -ea silentlycontinue | Out-Null"
 echo Setting VPN connection to accept split tunneling...
 :CheckVPNStatus
 for /f "usebackq delims=" %%w in (` 
