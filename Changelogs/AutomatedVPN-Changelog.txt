@@ -4,6 +4,7 @@ Feb 10,2022
 - better self update coding
 - no script can be used standalone or in bundle!
 - Add premium Option for paid VPN
+- now automated vpn can be applied for voip or globaly!
 
 Feb 9,2022
 - First Lunch!
