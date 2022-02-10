@@ -1,4 +1,7 @@
 Changelog!
+Feb 10,2022
+- excluding automated vpn script from file cleaner!
+
 Feb 9,2022
 - Adding Automated VPN and VOIP Initial Script
 - Various Bug Fixs
