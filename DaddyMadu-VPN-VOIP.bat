@@ -28,10 +28,13 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "1.3.4" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "1.3.5" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
+set "CurrentRunningScript=%~dpn0.bat"
+set "ScriptsBackupFile=%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIPBK.bat"
+set "ScriptMainFile=%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%ScriptsFullPath%'">nul 2>&1 
 ECHO =============================================================================================  
 echo Please Make Sure you DISABLED YOUR ANTIVIRUS and You HAVE INTERNET Avaliable. 
@@ -66,8 +69,17 @@ goto Continueaftervpnupdatecheck
 cls 
 echo Automated VPN Update Found v%OnlineVPNVersion%, Updating NOW! 
 powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckUpdaterChangelog = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Changelogs/AutomatedVPN-Changelog.txt'; $AutomatedVPNChangelog = ($CheckUpdaterChangelog.Content | Out-String).Trim(); $AutomatedVPNChangelog.Split([Environment]::NewLine) | Select -First 20"
-timeout /t 10 
+timeout /t 3
 cls 
+goto checkifrunningfrombackupornot 
+) 
+:checkifrunningfrombackupornot
+IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
+powershell -c "Copy-Item '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat' -Destination '%ScriptsBackupFile%' -Recurse -Force"
+timeout /t 2
+%ScriptsBackupFile%
+exit
+) ELSE ( 
 goto downloadupdatevpn 
 ) 
 :downloadupdatevpn 
@@ -100,15 +112,15 @@ echo As something is BLOCKING script from downloading latest Version Avaliable!
 ECHO ============================================================================================= 
 echo Please Press ENTER KEY to try again! 
 ECHO ============================================================================================= 
-pause >nul 
+timeout /t 2 
 goto downloadupdatevpn 
 ) 
 :Continueaftervpnupdatedownloaded 
-powershell -NoProfile -ExecutionPolicy Bypass -c "Copy-Item -Path '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat' -Destination '%CurrentScriptPath%' -Force" 
 cls 
 echo Update Completed Successfully! Trying to Relunch Script Again... 
 timeout /t 2 
-%CurrentScriptPath% 
+%ScriptMainFile% 
+powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea 0 | Out-Null"
 exit 
 :Continueaftervpnupdatecheck 
 cd /d "%systemdrive%\Windows\System32" 
