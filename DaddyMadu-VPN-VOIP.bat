@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "1.3.5" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "1.3.6" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -119,8 +119,7 @@ goto downloadupdatevpn
 cls 
 echo Update Completed Successfully! Trying to Relunch Script Again... 
 timeout /t 2 
-%ScriptMainFile% 
-powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea 0 | Out-Null"
+start /b powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea 0 | Out-Null" & start /b %ScriptMainFile%
 exit 
 :Continueaftervpnupdatecheck 
 cd /d "%systemdrive%\Windows\System32" 
