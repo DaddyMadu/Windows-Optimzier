@@ -1,6 +1,6 @@
 @echo off
 cd /d "%systemdrive%\Windows\System32"
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.0" /f >nul 2>&1
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.1" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%userprofile%\AppData\Local\Temp\dmtmp'" >nul 2>&1
 cls
@@ -409,33 +409,37 @@ SET "sourcedir=%userprofile%\AppData\Local\Temp"
 SET "keepfile=DaddyMadu-Windows-Optimizer.bat"
 SET "keepfile2=DaddyMadu-Apps-Installer.bat"
 SET "keepfile3=DaddyMadu-Windows-Optimizer.ps1"
+SET "keepfile4=DaddyMadu-VPN-VOIP.bat"
 SET "keepdir=dmtmp"
 FOR /d %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepdir%" RD /S /Q "%%a"
-FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" DEL /S /F /Q "%%a"
+FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" IF /i NOT "%%~nxa"=="%keepfile4%" DEL /S /F /Q "%%a"
 SETLOCAL
 SET "sourcedir=%userprofile%\AppData\Local\Temp\dmtmp"
 SET "keepfile=DaddyMadu-Windows-Optimizer.bat"
 SET "keepfile2=DaddyMadu-Apps-Installer.bat"
 SET "keepfile3=DaddyMadu-Windows-Optimizer.ps1"
+SET "keepfile4=DaddyMadu-VPN-VOIP.bat"
 SET "keepdir=dmtmp"
 FOR /d %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepdir%" RD /S /Q /F "%%a"
-FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" DEL /S /F /Q "%%a"
+FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" IF /i NOT "%%~nxa"=="%keepfile4%" DEL /S /F /Q "%%a"
 SETLOCAL
 SET "sourcedir=%userprofile%\Local Settings\Temp"
 SET "keepfile=DaddyMadu-Windows-Optimizer.bat"
 SET "keepfile2=DaddyMadu-Apps-Installer.bat"
 SET "keepfile3=DaddyMadu-Windows-Optimizer.ps1"
+SET "keepfile4=DaddyMadu-VPN-VOIP.bat"
 SET "keepdir=dmtmp"
 FOR /d %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepdir%" RD /S /Q "%%a"
-FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" DEL /S /F /Q "%%a"
+FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" IF /i NOT "%%~nxa"=="%keepfile4%" DEL /S /F /Q "%%a"
 SETLOCAL
 SET "sourcedir=%userprofile%\Local Settings\Temp\dmtmp"
 SET "keepfile=DaddyMadu-Windows-Optimizer.bat"
 SET "keepfile2=DaddyMadu-Apps-Installer.bat"
 SET "keepfile3=DaddyMadu-Windows-Optimizer.ps1"
+SET "keepfile4=DaddyMadu-VPN-VOIP.bat"
 SET "keepdir=dmtmp"
 FOR /d %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepdir%" RD /S /Q /F "%%a"
-FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" DEL /S /F /Q "%%a"
+FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%keepfile%" IF /i NOT "%%~nxa"=="%keepfile2%" IF /i NOT "%%~nxa"=="%keepfile3%" IF /i NOT "%%~nxa"=="%keepfile4%" DEL /S /F /Q "%%a"
 del /f /s /q "%userprofile%\recent\*.*"
 del /f /s /q "%windir%\Temp\*.*"
 goto googlednschoice
