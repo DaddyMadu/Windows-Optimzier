@@ -225,5 +225,5 @@ route add 35.0.0.0 mask 255.0.0.0 %ip_address%
 route add 50.0.0.0 mask 255.0.0.0 %ip_address%
 route add 52.0.0.0 mask 255.0.0.0 %ip_address%
 route add 54.0.0.0 mask 255.0.0.0 %ip_address%
-
 ECHO ***********************DONE***********************
+exit
