@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.1" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -119,7 +119,7 @@ goto downloadupdatevpn
 cls 
 echo Update Completed Successfully! Trying to Relunch Script Again... 
 timeout /t 2 
-start /b powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea 0 | Out-Null" & start /b %ScriptMainFile%
+start /b powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 exit 
 :Continueaftervpnupdatecheck 
 cd /d "%systemdrive%\Windows\System32" 
@@ -187,7 +187,7 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 $unsortedservers = Get-Content "$env:USERPROFILE\VPNServers.txt"
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Write-Host "Pinging fetched vpn servers and removing dead ones..."
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 @(foreach ($vserver in $unsortedservers){
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 test-connection -ComputerName $vserver -Count 1 -ea 0 ^|
+echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 test-connection -ComputerName $vserver -Count 1 -ea silentlycontinue ^|
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1  measure responsetime -average ^|
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1  %% {$_.average.tostring() + " $vserver"}}) ^|
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1  sort ^|%% {$_.split()[1]} ^| out-file -FilePath $env:USERPROFILE\VPNServersSorted.txt -Append
