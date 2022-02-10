@@ -1,4 +1,8 @@
 Changelog!
+Feb 10,2022
+- fixed shortcut not working after update
+- better self update coding
+
 Feb 9,2022
 - First Lunch!
 - scape confirmition for nuget installation.
