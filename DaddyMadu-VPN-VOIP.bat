@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.7" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.8" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -41,9 +41,7 @@ echo Please Make Sure you DISABLED YOUR ANTIVIRUS and You HAVE INTERNET Avaliabl
 echo As some ANTIVIRUS Might Detect This Script As False Positive! 
 echo Or add This Script to Exclusion List. 
 ECHO =============================================================================================  
-echo Please Press ENTER KEY to Continue!  
-ECHO =============================================================================================  
-timeout /t 3 
+timeout /t 2 /nobreak >nul
 for %%i in ("%~0.") do SET "CurrentScriptPath=%%~fi" 
 echo Currently Running From  %CurrentScriptPath% 
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%CurrentScriptPath%'">nul 2>&1 
@@ -55,7 +53,7 @@ Ping 1.1.1.1 -n 1 -w 1000
 cls
 if errorlevel 1 (
 echo No Interenet Connection Found!, Lunching Latest Offline Version Avaliable.
-timeout /t 2
+timeout /t 1 /nobreak >nul
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "OnlineVPNVersion=%%z"
 ) else (
 goto OnlineVPNVersionChecker
@@ -69,14 +67,14 @@ goto Continueaftervpnupdatecheck
 cls 
 echo Automated VPN Update Found v%OnlineVPNVersion%, Updating NOW! 
 powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckUpdaterChangelog = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/Changelogs/AutomatedVPN-Changelog.txt'; $AutomatedVPNChangelog = ($CheckUpdaterChangelog.Content | Out-String).Trim(); $AutomatedVPNChangelog.Split([Environment]::NewLine) | Select -First 20"
-timeout /t 3
+timeout /t 2 /nobreak >nul
 cls 
 goto checkifrunningfrombackupornot 
 ) 
 :checkifrunningfrombackupornot
 IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 powershell -c "Copy-Item '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat' -Destination '%ScriptsBackupFile%' -Recurse -Force"
-timeout /t 2
+timeout /t 2 /nobreak >nul
 %ScriptsBackupFile%
 exit
 ) ELSE ( 
@@ -112,13 +110,13 @@ echo As something is BLOCKING script from downloading latest Version Avaliable!
 ECHO ============================================================================================= 
 echo Please Press ENTER KEY to try again! 
 ECHO ============================================================================================= 
-timeout /t 2 
+timeout /t 5 /nobreak >nul
 goto downloadupdatevpn 
 ) 
 :Continueaftervpnupdatedownloaded 
 cls 
 echo Update Completed Successfully! Trying to Relunch Script Again... 
-timeout /t 2 
+timeout /t 2 /nobreak >nul
 start /b powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 exit 
 :Continueaftervpnupdatecheck 
@@ -160,7 +158,7 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 function
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 if ((Get-VpnConnection).name -eq "VPN" ) {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 	Write-Host "VPN Connection found! updating it with the latest fetched vpn server..."
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 If ((Get-VPNconnection -Name "VPN").ConnectionStatus -eq "Connected" ) {
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 rasdial "VPN" /DISCONNECT
+echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 rasdial "VPN" /DISCONNECT ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Start-Sleep -s 2
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 	Set-VpnConnection -Name "VPN" -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "NoEncryption" -AuthenticationMethod "PAP" -RememberCredential:$true -ErrorAction SilentlyContinue ^| Out-Null
@@ -170,14 +168,12 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Writ
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Add-VpnConnection -Name $VPNServername -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "NoEncryption" -AuthenticationMethod "PAP" -RememberCredential:$true -ErrorAction SilentlyContinue ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Write-Host "Done!"
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 function UpdateVPNwithServerEncrypted {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 if ((Get-VpnConnection).name -eq "VPN" ) {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 	Write-Host "VPN Connection found! updating it with the latest fetched vpn server..."
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 If ((Get-VPNconnection -Name "VPN").ConnectionStatus -eq "Connected" ) {
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 rasdial "VPN" /DISCONNECT
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Start-Sleep -s 2
+echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 rasdial "VPN" /DISCONNECT ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 	Set-VpnConnection -Name "VPN" -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "Required" -AuthenticationMethod "MSChapv2" -RememberCredential:$true -ErrorAction SilentlyContinue ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 	Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue ^| Out-Null
@@ -186,7 +182,6 @@ echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Writ
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Add-VpnConnection -Name $VPNServername -ServerAddress "$VPNServerAdress" -TunnelType "Sstp" -EncryptionLevel "Required" -AuthenticationMethod "MSChapv2" -RememberCredential:$true -ErrorAction SilentlyContinue ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1     Set-VpnConnectionUsernamePassword -connectionname $VPNServername -username $VPNusername -password $VPNpassword -ErrorAction SilentlyContinue ^| Out-Null
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Write-Host "Done!"
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 }
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 If (Test-Path -Path "$env:userprofile\DaddyMaduVPN.config" ) {
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 Copy-Item -Path "$env:userprofile\DaddyMaduVPN.config" -Destination "$env:userprofile\DaddyMaduVPN.ps1"
@@ -223,7 +218,6 @@ echo>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 $content
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 [System.IO.File]::WriteAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk", $content)
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 $content = [System.IO.File]::ReadAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk").Replace("PreviewDomain=1","PreviewDomain=0")
 echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 [System.IO.File]::WriteAllText("$env:APPDATA\Microsoft\Network\Connections\Pbk\rasphone.pbk", $content)
-echo>>%userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 Write-Host "Done!"
 powershell -ExecutionPolicy Bypass %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1
 powershell Start-Sleep -s 1
 powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 -Force -ea silentlycontinue | Out-Null"
@@ -254,13 +248,13 @@ echo Checking for Updates in 0:00 - Press N to Check Now, or C to Cancel.
 if errorlevel 2 (goto VPNforVOIP) else goto GlobalVPNonSYSTEM
 :GlobalVPNonSYSTEM
 rasphone -d "VPN"
-timeout /t 3 /nobreak >nul
+timeout /t 2 /nobreak >nul
 netsh interface ipv4 set interface VPN metric=1
 timeout /t 1 /nobreak >nul
 Powershell Set-NetIPInterface -InterfaceAlias "VPN" -InterfaceMetric "1"
 echo Y | powershell Set-VpnConnection -Name "VPN" -SplitTunneling $False
 rasphone -h "VPN"
-timeout /t 3 /nobreak >nul
+timeout /t 2 /nobreak >nul
 rasphone -d "VPN"
 timeout /t 2 /nobreak >nul
 goto eof
