@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.2" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.3" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -214,17 +214,41 @@ for /f "usebackq delims=" %%w in (`
 powershell -NoProfile -ExecutionPolicy Bypass -c "$vpnStatus = If ((rasdial | select-string 'VPN').count -eq 0) {'Disconnected'} else {'Online'}; $vpnStatus" 
 `) do set "VPNChecker=%%w"
 IF %VPNChecker% EQU Disconnected ( 
-goto RestOFfile 
+goto VPNGLobalChoice 
 ) ELSE ( 
 rasphone -h "VPN"
 goto CheckVPNStatus 
 )
-:RestOFfile
+:VPNGLobalChoice
+setlocal enableDelayedExpansion
+for /l %%N in (3 -1 1) do (
+  set /a "min=%%N/60, sec=%%N%%60, n-=1"
+  if !sec! lss 3 set sec=0!sec!
+  cls
+  choice /c:CN1 /n /m "Applying VPN ^for VOIP only in !min!:!sec! - Press N to Apply Now, or C to apply on GLOBAL system. " /t:1 /d:1
+  if not errorlevel 3 goto :break
+)
+cls
+echo Checking for Updates in 0:00 - Press N to Check Now, or C to Cancel.
+:break
+if errorlevel 2 (goto VPNforVOIP) else goto GlobalVPNonSYSTEM
+:GlobalVPNonSYSTEM
+rasphone -d "VPN"
+timeout /t 3 /nobreak >nul
+netsh interface ipv4 set interface VPN metric=1
+timeout /t 1 /nobreak >nul
+Powershell Set-NetIPInterface -InterfaceAlias "VPN" -InterfaceMetric "1"
+echo Y | powershell Set-VpnConnection -Name "VPN" -SplitTunneling $False
+rasphone -h "VPN"
+timeout /t 2 /nobreak >nul
+rasphone -d "VPN"
+timeout /t 2 /nobreak >nul
+goto eof
+:VPNforVOIP
 rasphone -d "VPN"
 Powershell Set-VpnConnection -Name "VPN" -SplitTunneling $True
 rasphone -h "VPN"
 rasphone -d "VPN"
-powershell -c "Get-NetAdapter -Physical | ForEach-Object { Set-DnsClientServerAddress $_.Name -ServerAddresses ('8.8.8.8') }"
 ECHO Starting Valorant Voip Routing...
 set ip="IP Address"
 rem set ip="IP Address"
@@ -237,4 +261,7 @@ route add 50.0.0.0 mask 255.0.0.0 %ip_address%
 route add 52.0.0.0 mask 255.0.0.0 %ip_address%
 route add 54.0.0.0 mask 255.0.0.0 %ip_address%
 ECHO ***********************DONE***********************
+goto eof
+:eof
+setlocal DisableDelayedExpansion
 exit
