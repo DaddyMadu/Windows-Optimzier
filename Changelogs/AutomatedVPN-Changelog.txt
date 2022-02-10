@@ -3,6 +3,7 @@ Feb 10,2022
 - fixed shortcut not working after update
 - better self update coding
 - no script can be used standalone or in bundle!
+- Add premium Option for paid VPN
 
 Feb 9,2022
 - First Lunch!
