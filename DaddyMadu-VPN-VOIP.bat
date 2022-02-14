@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.0.8" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -36,12 +36,51 @@ set "CurrentRunningScript=%~dpn0.bat"
 set "ScriptsBackupFile=%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIPBK.bat"
 set "ScriptMainFile=%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%ScriptsFullPath%'">nul 2>&1 
-ECHO =============================================================================================  
-echo Please Make Sure you DISABLED YOUR ANTIVIRUS and You HAVE INTERNET Avaliable. 
-echo As some ANTIVIRUS Might Detect This Script As False Positive! 
-echo Or add This Script to Exclusion List. 
-ECHO =============================================================================================  
-timeout /t 2 /nobreak >nul
+goto PremiumsubscriptionChoice
+:PremiumsubscriptionChoice
+setlocal enableDelayedExpansion
+(Set LF=^
+%Null%
+)
+for /l %%N in (3 -1 1) do (
+  set /a "min=%%N/60, sec=%%N%%60, n-=1"
+  if !sec! lss 3 set sec=0!sec!
+  cls
+  choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue Now, or C to put your Premium DaddyMadu VPN subscription.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=!LF!Make Sure to add This Script to ANTIVIRUS Exclusion List and You HAVE INTERNET Avaliable.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= " /t:1 /d:1
+  if not errorlevel 3 goto :break
+)
+cls
+echo Checking for Updates in 0:00 - Press N to Continue Now, or C to input your Premium DaddyMadu VPN subscription.
+:break
+if errorlevel 2 (goto ContinueVPNConnection) else goto premiumDaddyMaduVPNsubscription
+:premiumDaddyMaduVPNsubscription
+if exist "%userprofile%\DaddyMaduVPN.config" (
+powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
+)
+echo.
+echo.
+echo    Please insert your Premium DaddyMadu VPN subscription Username and Password down below.
+echo.
+echo.
+echo.
+set /p VPNusername=VPNUserName:
+set /p DecodedVPass=VPNPassword:
+(echo=$VPNServername ^= "VPN") > %userprofile%\DaddyMaduVPN.config
+(echo=$VPNServerAdress ^= "daddymadu.gg:5555") >> %userprofile%\DaddyMaduVPN.config
+(echo=$VPNusername ^= "%VPNusername%") >> %userprofile%\DaddyMaduVPN.config
+for /f "usebackq delims=" %%b in (`
+  powershell -NoProfile -ExecutionPolicy Bypass -c "$DecodedVPass=echo %DecodedVPass%; $Bytes = [System.Text.Encoding]::Unicode.GetBytes($DecodedVPass); $EncodedText =[Convert]::ToBase64String($Bytes); $EncodedText"
+`) do set "Epassword=%%b"
+(echo=$Epassword ^= "%Epassword%") >> %userprofile%\DaddyMaduVPN.config
+if "%VPNusername%"=="" (goto :CheckforVPNNULL
+) else if "%DecodedVPass%"=="" (goto :CheckforVPNNULL
+) else goto :VPNinfoNotNulled
+:CheckforVPNNULL
+powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
+:VPNinfoNotNulled
+setlocal disableDelayedExpansion
+goto ContinueVPNConnection
+:ContinueVPNConnection
 for %%i in ("%~0.") do SET "CurrentScriptPath=%%~fi" 
 echo Currently Running From  %CurrentScriptPath% 
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%CurrentScriptPath%'">nul 2>&1 
