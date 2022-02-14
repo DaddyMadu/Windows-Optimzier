@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.1" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.2" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -74,10 +74,10 @@ for /f "usebackq delims=" %%b in (`
   powershell -NoProfile -ExecutionPolicy Bypass -c "$DecodedVPass=echo %DecodedVPass%; $Bytes = [System.Text.Encoding]::Unicode.GetBytes($DecodedVPass); $EncodedText =[Convert]::ToBase64String($Bytes); $EncodedText"
 `) do set "Epassword=%%b"
 (echo=$Epassword ^= "%Epassword%") >> %userprofile%\DaddyMaduVPN.config
-if "%VPNusername%"=="" (goto :CheckforVPNNULL
-) else if "%DecodedVPass%"=="" (goto :CheckforVPNNULL
+if "%VPNusername%"=="" (goto :VPNinfoisNULL
+) else if "%DecodedVPass%"=="" (goto :VPNinfoisNULL
 ) else goto :VPNinfoNotNulled
-:CheckforVPNNULL
+:VPNinfoisNULL
 powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
 :VPNinfoNotNulled
 setlocal disableDelayedExpansion
@@ -280,11 +280,11 @@ for /l %%N in (3 -1 1) do (
   set /a "min=%%N/60, sec=%%N%%60, n-=1"
   if !sec! lss 3 set sec=0!sec!
   cls
-  choice /c:CN1 /n /m "Applying VPN ^for VOIP only in !min!:!sec! - Press N to Apply Now, or C to apply on GLOBAL system. " /t:1 /d:1
+  choice /c:CN1 /n /m "Auto apply VPN ^for VOIP only in !min!:!sec! - Press N to Apply Now, or C to apply on GLOBAL system. " /t:1 /d:1
   if not errorlevel 3 goto :break
 )
 cls
-echo Checking for Updates in 0:00 - Press N to Check Now, or C to Cancel.
+echo auto apply VPN for VOIP only in 0:00 - Press N to Apply Now, or C to apply on GLOBAL system.
 :break
 if errorlevel 2 (goto VPNforVOIP) else goto GlobalVPNonSYSTEM
 :GlobalVPNonSYSTEM
