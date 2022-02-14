@@ -1,4 +1,8 @@
 Changelog!
+Feb 14,2022
+- fixed some bugs
+- added option for premium DaddyMadu VPN subscription
+
 Feb 10,2022
 - fixed shortcut not working after update
 - better self update coding
