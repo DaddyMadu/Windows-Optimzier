@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.1" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -57,6 +57,7 @@ if errorlevel 2 (goto ContinueVPNConnection) else goto premiumDaddyMaduVPNsubscr
 if exist "%userprofile%\DaddyMaduVPN.config" (
 powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
 )
+cls
 echo.
 echo.
 echo    Please insert your Premium DaddyMadu VPN subscription Username and Password down below.
@@ -65,6 +66,7 @@ echo.
 echo.
 set /p VPNusername=VPNUserName:
 set /p DecodedVPass=VPNPassword:
+cls
 (echo=$VPNServername ^= "VPN") > %userprofile%\DaddyMaduVPN.config
 (echo=$VPNServerAdress ^= "daddymadu.gg:5555") >> %userprofile%\DaddyMaduVPN.config
 (echo=$VPNusername ^= "%VPNusername%") >> %userprofile%\DaddyMaduVPN.config
