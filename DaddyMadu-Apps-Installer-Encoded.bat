@@ -146,7 +146,7 @@ cls
 goto AppsUtilityMenu 
 :option-1 
 cls 
-set "Package=vcredist2005 vcredist2008 vcredist2010 vcredist2012 vcredist2013 vcredist140 silverlight" 
+set "Package=vcredist2005 vcredist2008 vcredist2010 vcredist2012 vcredist2013 vcredist140" 
 call %CallAppsInstallorUninstall% 
 goto :eof 
 :option-2 
