@@ -51,7 +51,7 @@
 title [ Daddy Madu ] Windows Optimizer! 
 color 1f 
 reg ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main" /v "DisableFirstRunCustomize" /t REG_DWORD /d "2" /f >nul 2>&1 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "LuncherVersion" /t REG_SZ /d "2.2.3" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "LuncherVersion" /t REG_SZ /d "2.2.4" /f >nul 2>&1 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%ScriptsFullPath%'">nul 2>&1 
@@ -59,7 +59,7 @@ for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Opti
 for %%i in ("%~0.") do SET "CurrentScriptPath=%%~fi" 
 echo Currently Running From  %CurrentScriptPath% 
 for /f "usebackq delims=" %%w in (` 
-powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckLuncherVersion = Invoke-WebRequest -Uri https://git.io/JON1C; $LuncherVersion = ($CheckLuncherVersion.Content | Out-String).Trim(); $LuncherVersion" 
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckLuncherVersion = Invoke-WebRequest -Uri 'https://git.io/JON1C'; $LuncherVersion = ($CheckLuncherVersion.Content | Out-String).Trim(); $LuncherVersion" 
 `) do set "OnlineLuncherVersion=%%w"
 echo checking internet connection
 Ping 1.1.1.1 -n 1 -w 1000
@@ -79,7 +79,7 @@ goto Continueafterluncherupdatecheck
 ) ELSE ( 
 cls 
 echo Luncher Update Found v%OnlineLuncherVersion%, Updating NOW! 
-powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckUpdaterChangelog = Invoke-WebRequest -Uri https://git.io/JONPD; $LuncherChangelog = ($CheckUpdaterChangelog.Content | Out-String).Trim(); $LuncherChangelog.Split([Environment]::NewLine) | Select -First 20"
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckUpdaterChangelog = Invoke-WebRequest -Uri 'https://git.io/JONPD'; $LuncherChangelog = ($CheckUpdaterChangelog.Content | Out-String).Trim(); $LuncherChangelog.Split([Environment]::NewLine) | Select -First 20"
 timeout /t 20 
 cls 
 goto downloadupdateluncher 
@@ -103,7 +103,7 @@ GOTO alternativedownloadluncher2
 ) 
 :alternativedownloadluncher2 
 cls 
-powershell -c "Invoke-WebRequest https://git.io/JOFPg -OutFile %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Luncher.bat" 
+powershell -c "Invoke-WebRequest 'https://git.io/JOFPg' -OutFile '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Luncher.bat'" 
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Luncher.bat" ( 
 goto Continueafterluncherupdatedownloaded 
 ) ELSE ( 
@@ -136,7 +136,7 @@ GOTO downloadupdate
 ) 
 :choice 
 for /f "usebackq delims=" %%w in (` 
-powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckOptimizerVersion = Invoke-WebRequest -Uri https://git.io/JON1p; $OptimizerVersion = ($CheckOptimizerVersion.Content | Out-String).Trim(); $OptimizerVersion" 
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckOptimizerVersion = Invoke-WebRequest -Uri 'https://git.io/JON1p'; $OptimizerVersion = ($CheckOptimizerVersion.Content | Out-String).Trim(); $OptimizerVersion" 
 `) do set "OnlineOptimizerVersion=%%w" 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "OptimizerVersion=%%z" 
 echo checking internet connection
@@ -154,7 +154,7 @@ goto continue
 ) ELSE ( 
 cls 
 echo Windows Optimizer Update Found v%OnlineOptimizerVersion%, Script is updating NOW! 
-powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckOptimizerChangelog = Invoke-WebRequest -Uri https://git.io/JONPH; $OptimizerChangelog = ($CheckOptimizerChangelog.Content | Out-String).Trim(); $OptimizerChangelog.Split([Environment]::NewLine) | Select -First 20"
+powershell -NoProfile -ExecutionPolicy Bypass -c "$CheckOptimizerChangelog = Invoke-WebRequest -Uri 'https://git.io/JONPH'; $OptimizerChangelog = ($CheckOptimizerChangelog.Content | Out-String).Trim(); $OptimizerChangelog.Split([Environment]::NewLine) | Select -First 20"
 timeout /t 20 
 cls 
 goto downloadupdate 
@@ -178,7 +178,7 @@ GOTO alternativedownload2
 ) 
 :alternativedownload2 
 cls 
-powershell -c "Invoke-WebRequest https://git.io/JOLBr -OutFile %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.bat" 
+powershell -c "Invoke-WebRequest 'https://git.io/JOLBr' -OutFile %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.bat" 
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.bat" ( 
 goto continue 
 ) ELSE ( 
