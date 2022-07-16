@@ -1,4 +1,7 @@
 Changelog!
+Jul 16,2022
+- Typo and some fixs.
+
 Dec 2,2021
 - Deconding all the files, so we can edit and maintain them faster.
 hopfully for the best and no one rebranding them for thier own benefit! 
