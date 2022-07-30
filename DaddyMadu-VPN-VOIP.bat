@@ -28,7 +28,7 @@ if '%errorlevel%' NEQ '0' (
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.2" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.1.5" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -309,12 +309,16 @@ set ip="IP Address"
 rem set ip="IP Address"
 for /f "tokens=3 delims=: " %%I in ('netsh interface IPv4 show addresses "VPN" ^| findstr /C:%ip%') do set ip_address=%%I
 route add 3.0.0.0 mask 255.0.0.0 %ip_address%
+route add 8.0.0.0 mask 255.0.0.0 %ip_address%
 route add 18.0.0.0 mask 255.0.0.0 %ip_address%
 route add 34.0.0.0 mask 255.0.0.0 %ip_address%
 route add 35.0.0.0 mask 255.0.0.0 %ip_address%
 route add 50.0.0.0 mask 255.0.0.0 %ip_address%
 route add 52.0.0.0 mask 255.0.0.0 %ip_address%
 route add 54.0.0.0 mask 255.0.0.0 %ip_address%
+route add 216.0.0.0 mask 255.0.0.0 %ip_address%
+route add 74.0.0.0 mask 255.0.0.0 %ip_address%
+route add 63.0.0.0 mask 255.0.0.0 %ip_address%
 ECHO ***********************DONE***********************
 goto eof
 :eof
