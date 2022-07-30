@@ -1,6 +1,7 @@
 Changelog!
 July 31,2022
 - added wider routing ip range.
+- fixing running as admin issue!
 
 Feb 14,2022
 - fixed some bugs
