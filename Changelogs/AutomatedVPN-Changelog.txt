@@ -1,4 +1,7 @@
 Changelog!
+July 31,2022
+- added wider routing ip range.
+
 Feb 14,2022
 - fixed some bugs
 - added option for premium DaddyMadu VPN subscription
