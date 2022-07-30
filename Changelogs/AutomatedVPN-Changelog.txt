@@ -1,7 +1,9 @@
 Changelog!
 July 31,2022
 - added wider routing ip range.
-- fixing running as admin issue!
+- fixed running as admin issue!
+- fixed error when updated to new version!
+- created shortcut standalone useage.
 
 Feb 14,2022
 - fixed some bugs
