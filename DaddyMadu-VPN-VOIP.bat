@@ -177,6 +177,7 @@ timeout /t 5 /nobreak >nul
 goto downloadupdatevpn 
 ) 
 :Continueaftervpnupdatedownloaded 
+powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%userprofile%\Desktop\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
 cls 
 echo Update Completed Successfully! Trying to Relunch Script Again... 
 timeout /t 2 /nobreak >nul
