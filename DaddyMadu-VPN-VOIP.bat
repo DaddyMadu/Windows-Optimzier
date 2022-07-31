@@ -51,7 +51,7 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.2.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "2.2.1" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
@@ -59,6 +59,15 @@ set "CurrentRunningScript=%~dpn0.bat"
 set "ScriptsBackupFile=%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIPBK.bat"
 set "ScriptMainFile=%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%ScriptsFullPath%'">nul 2>&1 
+:checkifrunningfromMainorno
+IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
+goto PremiumsubscriptionChoice
+) ELSE ( 
+powershell -c "Copy-Item '%CurrentRunningScript%' -Destination '%ScriptMainFile%' -Recurse -Force"
+timeout /t 3 /nobreak >nul
+powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%userprofile%\Desktop\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
+start /b powershell -c "Remove-Item -Path %CurrentRunningScript% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
+) 
 goto PremiumsubscriptionChoice
 :PremiumsubscriptionChoice
 setlocal enableDelayedExpansion
