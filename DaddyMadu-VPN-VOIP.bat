@@ -159,7 +159,7 @@ goto downloadupdatevpn
 :downloadupdatevpn 
 cls 
 del /s /f /q "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat">nul 2>&1 
-powershell -c "Invoke-WebRequest 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat' -OutFile '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'" 
+bitsadmin /transfer "Downloading Automated VPN Latest Update" /priority FOREGROUND "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 goto Continueaftervpnupdatedownloaded 
 ) ELSE ( 
@@ -175,7 +175,7 @@ GOTO alternativedownloadvpn2
 ) 
 :alternativedownloadvpn2 
 cls 
-bitsadmin /transfer "Downloading Automated VPN Latest Update" /priority FOREGROUND "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
+powershell -c "Invoke-WebRequest 'https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat' -OutFile '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'" 
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 goto Continueaftervpnupdatedownloaded 
 ) ELSE ( 
