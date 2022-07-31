@@ -63,10 +63,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPat
 IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 goto PremiumsubscriptionChoice
 ) ELSE ( 
+ IF "%CurrentRunningScript%" EQU "%ScriptsBackupFile%" ( 
+ goto PremiumsubscriptionChoice
+ ) ELSE (
 powershell -c "Copy-Item '%CurrentRunningScript%' -Destination '%ScriptMainFile%' -Recurse -Force"
 timeout /t 3 /nobreak >nul
 powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%userprofile%\Desktop\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
 start /b powershell -c "Remove-Item -Path %CurrentRunningScript% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
+)
 ) 
 goto PremiumsubscriptionChoice
 :PremiumsubscriptionChoice
