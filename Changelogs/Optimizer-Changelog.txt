@@ -1,4 +1,7 @@
 Changelog!
+Aug 19,2022
+- fixing issues!
+
 Feb 10,2022
 - excluding automated vpn script from file cleaner!
 
