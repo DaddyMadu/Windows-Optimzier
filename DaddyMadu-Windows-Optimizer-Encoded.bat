@@ -15,7 +15,7 @@ echo 2. Install and scan system with MalwareBytes
 echo 3. Scan System + Repair Windows Image
 echo 4. Install or Update Wise Programs Uninstaller
 echo 5. Automated Apps Installer - Beta
-echo 6. Windows 10/11 Gaming Focus Full Tweaker and Debloater
+echo 6. Windows 10/^11 Gaming Focus Full Tweaker and Debloater
 echo 7. Fix Start Menu issues
 echo 8. Fix and Rebuild Icons
 echo 9. Games Optimizer
