@@ -1,6 +1,6 @@
 @echo off
 cd /d "%systemdrive%\Windows\System32"
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.3" /f >nul 2>&1
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.4" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%userprofile%\AppData\Local\Temp\dmtmp'" >nul 2>&1
 cls
@@ -64,12 +64,12 @@ cls
 echo Getting Things Ready for you, Please Wait...
 reg ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main" /v DisableFirstRunCustomize /t REG_DWORD /d 2 /f >nul 2>&1
 for /f "usebackq delims=" %%a in (`
-  powershell -NoProfile -ExecutionPolicy Bypass -c "$downloadwuiPage = Invoke-WebRequest -Uri 'https://www.wisecleaner.com/wise-program-uninstaller.html'; $DownloadwuiLink = ($downloadwuiPage.ParsedHtml.getElementsByTagName('a') | ?{$_.id -match 'free-download'} | select @{expression={$_.href}} | ft -hide | Out-String).Trim(); $DownloadwuiLink"
+  powershell -NoProfile -ExecutionPolicy Bypass -c "$Results = Invoke-WebRequest -Method Get -Uri 'https://www.wisecleaner.com/index.php?r=download-product/latest-version&product=wise-program-uninstaller' -MaximumRedirection 0 -ErrorAction SilentlyContinue; $DownloadwuiLink = $Results.Headers.Location; $DownloadwuiLink"
 `) do set "DownloadwuiLink=%%a"
 for /f "usebackq delims=" %%b in (`
-  powershell -NoProfile -ExecutionPolicy Bypass -c "$downloadwuiPage = Invoke-WebRequest -Uri 'https://www.wisecleaner.com/wise-program-uninstaller.html'; $DownloadwuiLink = ($downloadwuiPage.ParsedHtml.getElementsByTagName('a') | ?{$_.id -match 'free-download'} | select @{expression={$_.href}} | ft -hide | Out-String).Trim(); $DownloadwuiLink; [System.IO.Path]::GetFileName(("$DownloadwuiLink"))"
+  powershell -NoProfile -ExecutionPolicy Bypass -c "$Results = Invoke-WebRequest -Method Get -Uri 'https://www.wisecleaner.com/index.php?r=download-product/latest-version&product=wise-program-uninstaller' -MaximumRedirection 0 -ErrorAction SilentlyContinue; $DownloadwuiLink = $Results.Headers.Location; $DownloadwuiLink; [System.IO.Path]::GetFileName(("$DownloadwuiLink"))"
 `) do set "FilewuiName=%%b"
-echo File Name: %FilewuiName%
+echo File Name: "%FilewuiName%"
 cls
 IF EXIST "%systemdrive%\Program Files (x86)\Wise\Wise Program Uninstaller\WiseProgramUninstaller.exe" (
   GOTO ConfirmationwuiDW
@@ -476,12 +476,12 @@ goto downloadwrc
 :downloadwrc
 reg ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main" /v DisableFirstRunCustomize /t REG_DWORD /d 2 /f >nul 2>&1
 for /f "usebackq delims=" %%a in (`
-  powershell -NoProfile -ExecutionPolicy Bypass -c "$downloadwcPage = Invoke-WebRequest -Uri 'https://www.wisecleaner.com/wise-registry-cleaner.html'; $DownloadwcLink = ($downloadwcPage.ParsedHtml.getElementsByTagName('a') | ?{$_.id -match 'free-download'} | select @{expression={$_.href}} | ft -hide | Out-String).Trim(); $DownloadwcLink"
+  powershell -NoProfile -ExecutionPolicy Bypass -c "$Results = Invoke-WebRequest -Method Get -Uri 'https://www.wisecleaner.com/index.php?r=download-product/latest-version&product=wise-registry-cleaner' -MaximumRedirection 0 -ErrorAction SilentlyContinue; $DownloadwcLink = $Results.Headers.Location; $DownloadwcLink"
 `) do set "DownloadwcLink=%%a"
 for /f "usebackq delims=" %%b in (`
-  powershell -NoProfile -ExecutionPolicy Bypass -c "$downloadwcPage = Invoke-WebRequest -Uri 'https://www.wisecleaner.com/wise-registry-cleaner.html'; $DownloadwcLink = ($downloadwcPage.ParsedHtml.getElementsByTagName('a') | ?{$_.id -match 'free-download'} | select @{expression={$_.href}} | ft -hide | Out-String).Trim(); $DownloadwcLink; [System.IO.Path]::GetFileName(("$DownloadwcLink"))"
+  powershell -NoProfile -ExecutionPolicy Bypass -c "$Results = Invoke-WebRequest -Method Get -Uri 'https://www.wisecleaner.com/index.php?r=download-product/latest-version&product=wise-registry-cleaner' -MaximumRedirection 0 -ErrorAction SilentlyContinue; $DownloadwcLink = $Results.Headers.Location; $DownloadwcLink; [System.IO.Path]::GetFileName(("$DownloadwcLink"))"
 `) do set "FilewcName=%%b"
-echo File Name: %FilewcName%
+echo File Name: "%FilewcName%"
 cls
 IF EXIST "%systemdrive%\Program Files (x86)\Wise\Wise Registry Cleaner\WiseRegCleaner.exe" (
   GOTO wrcupdatescanandclean
@@ -499,7 +499,7 @@ goto askforwrcinstallation
 :Confirmationwrc
 cls
 echo Grapping Wise Registry Cleaner Latest Version Link...
-%DownloadwcLink%
+"%DownloadwcLink%"
 echo Downloading Wise Registry Cleaner...
 bitsadmin /transfer "Downloading Wise Registry Cleaner" /priority FOREGROUND "%DownloadwcLink%" "%systemdrive%\%FilewcName%"
 IF EXIST "%systemdrive%\%FilewcName%" (
@@ -524,7 +524,7 @@ for /f "usebackq delims=" %%x in (`
 if "%InstalledWCVersion%"=="%FilewcName%" (
 goto wrcscanandclean
 ) else (
-Echo New Update %FilewcName% Found, Updating NOW!
+Echo New Update "%FilewcName%" Found, Updating NOW!
 timeout /t 3 /nobreak >nul
 goto Confirmationwrc
 )
