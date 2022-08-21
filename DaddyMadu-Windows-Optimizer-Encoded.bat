@@ -1,6 +1,6 @@
 @echo off
 cd /d "%systemdrive%\Windows\System32"
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.5" /f >nul 2>&1
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.6" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%userprofile%\AppData\Local\Temp\dmtmp'" >nul 2>&1
 cls
@@ -15,7 +15,7 @@ echo 2. Install and scan system with MalwareBytes
 echo 3. Scan System + Repair Windows Image
 echo 4. Install or Update Wise Programs Uninstaller
 echo 5. Automated Apps Installer - Beta
-echo 6. Windows 10 Gaming Focus Full Tweaker and Debloater
+echo 6. Windows 10/11 Gaming Focus Full Tweaker and Debloater
 echo 7. Fix Start Menu issues
 echo 8. Fix and Rebuild Icons
 echo 9. Games Optimizer
