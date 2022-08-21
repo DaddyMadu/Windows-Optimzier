@@ -1,6 +1,6 @@
 @echo off
 cd /d "%systemdrive%\Windows\System32"
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.4" /f >nul 2>&1
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.5" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%userprofile%\AppData\Local\Temp\dmtmp'" >nul 2>&1
 cls
@@ -101,7 +101,7 @@ goto Confirmationwui
 :Confirmationwui
 cls
 echo Grapping Wise Program Uninstaller Latest Version Link...
-echo %DownloadwuiLink%
+echo "%DownloadwuiLink%"
 echo Downloading Wise Program Uninstaller...
 bitsadmin /transfer "Downloading Wise Program Uninstaller" /priority FOREGROUND "%DownloadwuiLink%" "%systemdrive%\%FilewuiName%"
 IF EXIST "%systemdrive%\%FilewuiName%" (
@@ -499,7 +499,7 @@ goto askforwrcinstallation
 :Confirmationwrc
 cls
 echo Grapping Wise Registry Cleaner Latest Version Link...
-"%DownloadwcLink%"
+echo "%DownloadwcLink%"
 echo Downloading Wise Registry Cleaner...
 bitsadmin /transfer "Downloading Wise Registry Cleaner" /priority FOREGROUND "%DownloadwcLink%" "%systemdrive%\%FilewcName%"
 IF EXIST "%systemdrive%\%FilewcName%" (
