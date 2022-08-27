@@ -1,4 +1,8 @@
 Changelog!
+Aug 27,2022
+- fixing some issues when "vpn" lowercase found
+- forcing the the script to check for "VPN" connection first if avaliable or not
+
 July 31,2022
 - added wider routing ip range.
 - fixed running as admin issue!
