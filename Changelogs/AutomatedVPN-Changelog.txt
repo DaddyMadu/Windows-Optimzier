@@ -1,4 +1,8 @@
 Changelog!
+Sep 12,2022
+- add valorant EU new Voip server route!
+enjoy!
+
 Aug 27,2022
 - fixing some issues when "vpn" lowercase found
 - forcing the the script to check for "VPN" connection first if avaliable or not
