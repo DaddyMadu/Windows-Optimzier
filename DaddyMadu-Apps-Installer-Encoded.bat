@@ -2,7 +2,7 @@
 mode 200 
 title [ Daddy Madu ] Autmated Apps Installer! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "1.1.2" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedApps" /t REG_SZ /d "2.0.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedApps') do @set "CurrentVersion=%%z" 
 cd /d "%systemdrive%\Windows\System32" 
 ECHO =============================================================================================  
@@ -81,7 +81,7 @@ echo.
 echo [15] WinRAR                               [16] K-Lite Codec Pack Full                   [17] LibreOffice Fresh 
 echo [18] FileZilla                            [19] K-Lite Codec Pack Basic                  [20] PDF Creator 
 echo [21] Google Drive for desktop             [22] Audacity                                 [23] Sumatra PDF 
-echo [24] Google Backup and Sync               [25] IrfanView                                [26] OBS Studio 
+echo [24] Google Backup and Sync               [25] ImageGlass                               [26] OBS Studio 
 echo [27] teracopy                             [28] Spotify                                  [29] FormatFactory 
 echo [30] 7zip                                 [31] VLC 
 echo [78] SyncBackFree
@@ -266,7 +266,7 @@ call %CallAppsInstallorUninstall%
 goto :eof 
 :option-25 
 cls 
-set "Package=IrfanView" 
+set "Package=imageglass" 
 call %CallAppsInstallorUninstall% 
 goto :eof 
 :option-26 
