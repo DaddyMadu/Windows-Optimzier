@@ -1,4 +1,7 @@
 Changelog!
+July 9,2023
+- Fixed bug when desktop file location is changed from default location.
+
 Aug 22,2022
 - fixing Wise Registry Cleaner download and update links
 - fixing Wise Program Uninstaller download and update links
