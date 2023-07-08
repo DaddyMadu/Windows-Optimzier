@@ -1,4 +1,5 @@
 Changelog!
+
 July 9,2023
 - Fixed bug when desktop file location is changed from default location.
 
