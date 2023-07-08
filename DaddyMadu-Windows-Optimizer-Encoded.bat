@@ -1,8 +1,11 @@
 @echo off
 cd /d "%systemdrive%\Windows\System32"
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.6" /f >nul 2>&1
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.7" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%userprofile%\AppData\Local\Temp\dmtmp'" >nul 2>&1
+for /f "usebackq delims=" %%a in (`
+powershell -NoProfile -ExecutionPolicy Bypass -c "$DesktopGetPath = [Environment]::GetFolderPath([Environment+SpecialFolder]::Desktop); $DesktopGetPath"
+`) do set "DesktopPath=%%a"
 cls
 title [ Daddy Madu ] Windows Optimizer!
 color 1f
@@ -780,7 +783,7 @@ del /s /f /q "D:\aow_drv.log"
 del /s /f /q "E:\aow_drv.log"
 del /s /f /q "F:\aow_drv.log"
 del /s /f /q "G:\aow_drv.log"
-powershell -c "Remove-Item '%userprofile%\Desktop\PUBG Mobile.lnk' -Force"
+powershell -c "Remove-Item '%DesktopPath%\PUBG Mobile.lnk' -Force"
 cls
 goto cleartemp 
 :GLinstaller
@@ -992,7 +995,7 @@ FOR /F "tokens=2*" %%A IN ('REG query "%GameloopAppMarket4_Path2%" /v "%Gameloop
 echo %GameloopAppMarket3path%
 goto continueCREATEPUBGSHORTCUT
 :continueCREATEPUBGSHORTCUT
-powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%userprofile%\Desktop\PUBG Mobile.lnk'); $Shortcut.TargetPath = '%GameloopAppMarket3path%\AppMarket.exe'; $Shortcut.Arguments = '-startpkg com.tencent.ig  -from DesktopLink'; $Shortcut.IconLocation = '%GameloopAppMarket3path%\Icons\com.tencent.ig\Game.Ico'; $Shortcut.Save()"
+powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%DesktopPath%\PUBG Mobile.lnk'); $Shortcut.TargetPath = '%GameloopAppMarket3path%\AppMarket.exe'; $Shortcut.Arguments = '-startpkg com.tencent.ig  -from DesktopLink'; $Shortcut.IconLocation = '%GameloopAppMarket3path%\Icons\com.tencent.ig\Game.Ico'; $Shortcut.Save()"
 goto FinishingCREATEPUBGSHORTCUT
 :CREATEPUBGSHORTCUTNOTFOUND2
 echo Gameloop AppMarket Path not Found! Please Install The Game First From Official Installer!
@@ -1216,6 +1219,7 @@ goto GamesOptimizer
 :AutomatedVPN
 cls
 echo Getting Things Ready for you, Please Wait...
+echo Desktop location is %DesktopPath%
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" (
 goto choiceVPNAppInstaller
 ) ELSE (
@@ -1270,7 +1274,7 @@ pause >nul
 goto VPNAppInstaller
 )
 :continueVPNAppInstaller
-powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%userprofile%\Desktop\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
+powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%DesktopPath%\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
 cls
 for /f "delims== tokens=2" %%a in ('wmic os get osarchitecture /value') do (
   set arch=%%a
