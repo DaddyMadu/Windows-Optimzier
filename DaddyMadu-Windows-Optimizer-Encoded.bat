@@ -1,4 +1,33 @@
 @echo off
+
+:: BatchGotAdmin
+:-------------------------------------
+REM  --> Check for permissions
+    IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
+>nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
+) ELSE (
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+)
+
+REM --> If error flag set, we do not have admin.
+if '%errorlevel%' NEQ '0' (
+    echo Requesting administrative privileges...
+    goto UACPrompt
+) else ( goto gotAdmin )
+
+:UACPrompt
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+    set params = %*:"=""
+    echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+    "%temp%\getadmin.vbs"
+    del "%temp%\getadmin.vbs"
+    exit /B
+
+:gotAdmin
+    pushd "%CD%"
+    CD /D "%~dp0"
+:--------------------------------------
 cd /d "%systemdrive%\Windows\System32"
 reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.7" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
@@ -7,7 +36,7 @@ for /f "usebackq delims=" %%a in (`
 powershell -NoProfile -ExecutionPolicy Bypass -c "$DesktopGetPath = [Environment]::GetFolderPath([Environment+SpecialFolder]::Desktop); $DesktopGetPath"
 `) do set "DesktopPath=%%a"
 cls
-title [ Daddy Madu ] Windows Optimizer!
+title [ Gulf_Mr.Nour ] Windows Optimizer!
 color 1f
 :Menu
 cls
@@ -44,7 +73,7 @@ if %answer%==999 goto Exit
 goto Menu
 :Exit
 cls
-echo Thank you for using Daddy Madu Windows Optimizer!
+echo Thank you for using Gulf_Mr.Nour Windows Optimizer!
 echo.
 TIMEOUT 3 >nul
 exit /b
@@ -122,7 +151,7 @@ echo Installing Wise Program Uninstaller...
 TIMEOUT 10 >nul
 GOTO Endwui
 :Endwui
-start http://daddymadu.gg/
+start https://discord.gg/anb1
 cls
 echo ------------------------------------------------------------------------
 echo Process Completed Successfully. press ENTER KEY to Continue!
@@ -155,7 +184,7 @@ goto AppInstallerHQ
 )
 :AppInstallerHQ
 cls
-bitsadmin /transfer "Downloading Daddy Madu Windows Optimizer Latest Update" /priority FOREGROUND "https://git.io/JO9MJ" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Apps-Installer.bat"
+bitsadmin /transfer "Downloading Gulf_Mr.Nour Windows Optimizer Latest Update" /priority FOREGROUND "https://git.io/JO9MJ" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Apps-Installer.bat"
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Apps-Installer.bat" (
 goto continueAppInstallerHQ
 ) ELSE (
@@ -224,7 +253,7 @@ goto uptodate
 :uptodate
 cls
 del /s /f /q "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1">nul 2>&1
-bitsadmin /transfer "Downloading Daddy Madu Windows Optimizer Latest Update" /priority FOREGROUND "http://tweaks.daddymadu.gg" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1"
+bitsadmin /transfer "Downloading Gulf_Mr.Nour Windows Optimizer Latest Update" /priority FOREGROUND "http://tweaks.daddymadu.gg" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1"
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1" (
 goto continuelocalstart
 ) ELSE (
@@ -535,7 +564,7 @@ goto Confirmationwrc
 cls
 echo Cleaning Registry using Wise Registry Cleaner...
 "%systemdrive%\Program Files (x86)\Wise\Wise Registry Cleaner\WiseRegCleaner.exe" -a -safe
-start http://daddymadu.gg/
+start https://discord.gg/anb1
 goto rebootafterRWC
 :rebootafterRWC
 cls
@@ -580,7 +609,7 @@ if %answer%==999 goto Exit
 goto GamesOptimizer
 :GameloopMenu
 cls
-title [ Daddy Madu ] Gameloop Optimizer!
+title [ Gulf_Mr.Nour ] Gameloop Optimizer!
 echo ... Welcome %username% to DaddyMadu Gameloop Optimizer ...
 echo.
 echo 1. Force Stop All Gameloop Emulator Process
@@ -1001,7 +1030,7 @@ goto FinishingCREATEPUBGSHORTCUT
 echo Gameloop AppMarket Path not Found! Please Install The Game First From Official Installer!
 goto FinishingCREATEPUBGSHORTCUT
 :FinishingCREATEPUBGSHORTCUT
-start http://daddymadu.gg/
+start https://discord.gg/anb1
 cls
 echo Gameloop Optimization Done Successfully! Press ENTER KEY yo Continue.
 pause >nul
@@ -1243,7 +1272,7 @@ goto VPNAppInstaller
 )
 :VPNAppInstaller
 cls
-bitsadmin /transfer "Downloading Daddy Madu Automated VPN VOIP Latest Update" /priority FOREGROUND "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
+bitsadmin /transfer "Downloading Gulf_Mr.Nour Automated VPN VOIP Latest Update" /priority FOREGROUND "https://raw.githubusercontent.com/DaddyMadu/Windows-Optimzier/main/DaddyMadu-VPN-VOIP.bat" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat"
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" (
 goto continueVPNAppInstaller
 ) ELSE (
