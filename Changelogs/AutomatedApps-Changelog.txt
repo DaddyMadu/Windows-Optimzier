@@ -1,5 +1,8 @@
 Changelog!
 
+Dec 19,2023
+- ignoring checksum for more compatibility when updating or installing apps.
+
 Nov 11,2022
 - replaced irfanviewer with imageglass photo viewer!
 
