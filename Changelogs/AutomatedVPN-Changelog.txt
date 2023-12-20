@@ -1,4 +1,7 @@
 Changelog!
+Dec 20,2023
+- Fixing missing package manager import module on windows 11 
+- fixing typo 
 
 July 9,2023
 - Fixed bug when desktop file location is changed from default location.
