@@ -1,6 +1,6 @@
 @echo off
 cd /d "%systemdrive%\Windows\System32"
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.2.7" /f >nul 2>&1
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "OptimizerVersion" /t REG_SZ /d "5.3.0" /f >nul 2>&1
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v OptimizerVersion') do @set "CurrentVersion=%%z"
 powershell -NoProfile -ExecutionPolicy Bypass -c "Add-MpPreference -ExclusionPath '%userprofile%\AppData\Local\Temp\dmtmp'" >nul 2>&1
 for /f "usebackq delims=" %%a in (`
@@ -224,7 +224,7 @@ goto uptodate
 :uptodate
 cls
 del /s /f /q "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1">nul 2>&1
-bitsadmin /transfer "Downloading Daddy Madu Windows Optimizer Latest Update" /priority FOREGROUND "http://tweaks.daddymadu.gg" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1"
+bitsadmin /transfer "Downloading Daddy Madu Windows Optimizer Latest Update" /priority FOREGROUND "http://daddymadu.gg/ps" "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1"
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1" (
 goto continuelocalstart
 ) ELSE (
@@ -232,7 +232,7 @@ GOTO alternativedownload
 )
 :alternativedownload
 cls
-powershell -c "(New-Object Net.WebClient).DownloadFile('http://tweaks.daddymadu.gg', '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1')"
+powershell -c "(New-Object Net.WebClient).DownloadFile('http://daddymadu.gg/ps', '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1')"
 IF EXIST "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1" (
 goto continuelocalstart
 ) ELSE (
@@ -240,7 +240,7 @@ GOTO alternativedownload2
 )
 :alternativedownload2
 cls
-powershell -c "Invoke-WebRequest http://tweaks.daddymadu.gg -OutFile %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1"
+powershell -c "Invoke-WebRequest http://daddymadu.gg/ps -OutFile %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-Windows-Optimizer.ps1"
 goto continuelocalstart
 :continuelocalstart
 cls
