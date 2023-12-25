@@ -1,4 +1,6 @@
 Changelog!
+Dec 25,2023
+- Updating windows debloater links.
 
 July 9,2023
 - Fixed bug when desktop file location is changed from default location.
