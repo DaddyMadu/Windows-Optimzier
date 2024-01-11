@@ -115,7 +115,8 @@ goto checkifrunningfrombackupornot
 :checkifrunningfrombackupornot
 IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 powershell -c "Copy-Item '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat' -Destination '%ScriptsBackupFile%' -Recurse -Force"
-timeout /t 3 /nobreak >nul
+timeout /t 5 /nobreak >nul
+echo %ScriptsBackupFile%
 start /b %ScriptsBackupFile% & exit
 ) ELSE ( 
 goto downloadupdatevpn 
