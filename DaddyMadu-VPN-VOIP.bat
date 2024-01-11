@@ -51,7 +51,7 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.0.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.1.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" > nul
 if %ERRORLEVEL% EQU 1 (
@@ -79,7 +79,7 @@ goto ContinueVPNConnection
 powershell -c "Copy-Item '%CurrentRunningScript%' -Destination '%ScriptMainFile%' -Recurse -Force"
 timeout /t 3 /nobreak >nul
 powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%DesktopPath%\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
-start /b powershell -c "Remove-Item -Path %CurrentRunningScript% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
+start /b powershell -c "Remove-Item -Path '%CurrentRunningScript%' -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 )
 )
 :ContinueVPNConnection
@@ -115,9 +115,10 @@ goto checkifrunningfrombackupornot
 :checkifrunningfrombackupornot
 IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 powershell -c "Copy-Item '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat' -Destination '%ScriptsBackupFile%' -Recurse -Force"
-timeout /t 5 /nobreak >nul
+timeout /t 3 /nobreak >nul
 echo %ScriptsBackupFile%
-start /b %ScriptsBackupFile% & exit
+start /b %ScriptsBackupFile%
+exit
 ) ELSE ( 
 goto downloadupdatevpn 
 ) 
