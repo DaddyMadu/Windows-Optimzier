@@ -51,8 +51,14 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "3.5.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.0.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
+reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" > nul
+if %ERRORLEVEL% EQU 1 (
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" /t REG_SZ /d "0" /f >nul 2>&1
+) else (
+for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v Mode') do @set "CurrentMode=%%z" >nul 2>&1
+)
 mkdir "%userprofile%\AppData\Local\Temp\dmtmp">nul 2>&1 & attrib +h +s "%userprofile%\AppData\Local\Temp\dmtmp" 
 set "ScriptsFullPath=%userprofile%\AppData\Local\Temp\dmtmp"
 set "CurrentRunningScript=%~dpn0.bat"
@@ -65,63 +71,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -c "$DesktopGetPath = [Environment
 echo Desktop location is %DesktopPath%
 :checkifrunningfromMainorno
 IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
-goto PremiumsubscriptionChoice
+goto ContinueVPNConnection
 ) ELSE ( 
  IF "%CurrentRunningScript%" EQU "%ScriptsBackupFile%" ( 
- goto PremiumsubscriptionChoice
+ goto ContinueVPNConnection
  ) ELSE (
 powershell -c "Copy-Item '%CurrentRunningScript%' -Destination '%ScriptMainFile%' -Recurse -Force"
 timeout /t 3 /nobreak >nul
 powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%DesktopPath%\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
 start /b powershell -c "Remove-Item -Path %CurrentRunningScript% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 )
-) 
-goto PremiumsubscriptionChoice
-:PremiumsubscriptionChoice
-setlocal enableDelayedExpansion
-(Set LF=^
-%Null%
 )
-for /l %%N in (3 -1 1) do (
-  set /a "min=%%N/60, sec=%%N%%60, n-=1"
-  if !sec! lss 3 set sec=0!sec!
-  cls
-  choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue Now, or C to put your Premium DaddyMadu VPN subscription.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=!LF!Make Sure to add This Script to ANTIVIRUS Exclusion List and You HAVE INTERNET Avaliable.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= " /t:1 /d:1
-  if not errorlevel 3 goto :break
-)
-cls
-echo Checking for Updates in 0:00 - Press N to Continue Now, or C to input your Premium DaddyMadu VPN subscription.
-:break
-if errorlevel 2 (goto ContinueVPNConnection) else goto premiumDaddyMaduVPNsubscription
-:premiumDaddyMaduVPNsubscription
-if exist "%userprofile%\DaddyMaduVPN.config" (
-powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
-)
-cls
-echo.
-echo.
-echo    Please insert your Premium DaddyMadu VPN subscription Username and Password down below.
-echo.
-echo.
-echo.
-set /p VPNusername=VPNUserName:
-set /p DecodedVPass=VPNPassword:
-cls
-(echo=$VPNServername ^= "VPN") > %userprofile%\DaddyMaduVPN.config
-(echo=$VPNServerAdress ^= "daddymadu.gg:5555") >> %userprofile%\DaddyMaduVPN.config
-(echo=$VPNusername ^= "%VPNusername%") >> %userprofile%\DaddyMaduVPN.config
-for /f "usebackq delims=" %%b in (`
-  powershell -NoProfile -ExecutionPolicy Bypass -c "$DecodedVPass=echo %DecodedVPass%; $Bytes = [System.Text.Encoding]::Unicode.GetBytes($DecodedVPass); $EncodedText =[Convert]::ToBase64String($Bytes); $EncodedText"
-`) do set "Epassword=%%b"
-(echo=$Epassword ^= "%Epassword%") >> %userprofile%\DaddyMaduVPN.config
-if "%VPNusername%"=="" (goto :VPNinfoisNULL
-) else if "%DecodedVPass%"=="" (goto :VPNinfoisNULL
-) else goto :VPNinfoNotNulled
-:VPNinfoisNULL
-powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
-:VPNinfoNotNulled
-setlocal disableDelayedExpansion
-goto ContinueVPNConnection
 :ContinueVPNConnection
 for %%i in ("%~0.") do SET "CurrentScriptPath=%%~fi" 
 echo Currently Running From  %CurrentScriptPath% 
@@ -200,11 +160,100 @@ echo Update Completed Successfully! Trying to Relunch Script Again...
 timeout /t 2 /nobreak >nul
 start /b powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 exit 
+goto Continueaftervpnupdatecheck
+:Continueaftervpnupdatecheck 
+if %CurrentMode% EQU 0 (goto PremiumsubscriptionChoice
+) else goto SetAndCheckVPNMode
+:PremiumsubscriptionChoice
+setlocal enableDelayedExpansion
+(Set LF=^
+%Null%
+)
+for /l %%N in (2 -1 1) do (
+  set /a "min=%%N/60, sec=%%N%%60, n-=1"
+  if !sec! lss 2 set sec=0!sec!
+  cls
+  choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue Now, or C to put your Premium DaddyMadu VPN subscription.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=!LF!Make Sure to add This Script to ANTIVIRUS Exclusion List and You HAVE INTERNET Avaliable.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= " /t:1 /d:1
+  if not errorlevel 3 goto :break
+)
+cls
+echo Continue in 0:00 - Press N to Continue Now, or C to input your Premium DaddyMadu VPN subscription.
+:break
+if errorlevel 2 (goto Continueaftervpnupdatecheck) else goto premiumDaddyMaduVPNsubscription
+:premiumDaddyMaduVPNsubscription
+if exist "%userprofile%\DaddyMaduVPN.config" (
+powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
+)
+cls
+echo.
+echo.
+echo    Please insert your Premium DaddyMadu VPN subscription Username and Password down below.
+echo.
+echo.
+echo.
+set /p VPNusername=VPNUserName:
+set /p DecodedVPass=VPNPassword:
+cls
+(echo=$VPNServername ^= "VPN") > %userprofile%\DaddyMaduVPN.config
+(echo=$VPNServerAdress ^= "daddymadu.gg:5555") >> %userprofile%\DaddyMaduVPN.config
+(echo=$VPNusername ^= "%VPNusername%") >> %userprofile%\DaddyMaduVPN.config
+for /f "usebackq delims=" %%b in (`
+  powershell -NoProfile -ExecutionPolicy Bypass -c "$DecodedVPass=echo %DecodedVPass%; $Bytes = [System.Text.Encoding]::Unicode.GetBytes($DecodedVPass); $EncodedText =[Convert]::ToBase64String($Bytes); $EncodedText"
+`) do set "Epassword=%%b"
+(echo=$Epassword ^= "%Epassword%") >> %userprofile%\DaddyMaduVPN.config
+if "%VPNusername%"=="" (goto :VPNinfoisNULL
+) else if "%DecodedVPass%"=="" (goto :VPNinfoisNULL
+) else goto :VPNinfoNotNulled
+:VPNinfoisNULL
+powershell -c "Remove-Item -Path $env:userprofile\DaddyMaduVPN.config -Force -ea silentlycontinue | Out-Null"
+:VPNinfoNotNulled
+setlocal disableDelayedExpansion
+goto Continueaftervpnupdatecheck
 :Continueaftervpnupdatecheck 
 cd /d "%systemdrive%\Windows\System32" 
+goto SetAndCheckVPNMode
+:SetAndCheckVPNMode
+setlocal enableDelayedExpansion
+(Set LF=^
+%Null%
+)
+for /l %%N in (2 -1 1) do (
+  set /a "min=%%N/60, sec=%%N%%60, n-=1"
+  if !sec! lss 2 set sec=0!sec!
+  cls
+  choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue with what you set before, or C to put your own default setting." /t:1 /d:1
+  if not errorlevel 3 goto :break
+)
+cls
+echo ... current active VPN Mode: %CurrentMode% ...
+echo Waiting for user input in 0:00 - Press N to Continue Now, or C to input your own vpn default mode settings.
+:break
+if errorlevel 2 (goto CheckVPNStatus) else goto Setvpnmodedefaultvalue
+:Setvpnmodedefaultvalue
+cls
+echo.
+echo.
+echo    Please enter your own vpn setting mode as described below.
+echo.
+echo    type 0 for resetting vpn to default behavior whenever you have issues.
+echo    type 1 for forcing script to always run in VPN for voip Mode.
+echo    type 2 for forcing script to always run VPN globally on system.
+echo.
+echo.
+set /p VPNMode=VPNMode:
+cls
+if %VPNMode% GEQ 0 if %VPNMode% LSS 3 (
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" /t REG_SZ /d "%VPNMode%" /f >nul 2>&1 
+) else (reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" /t REG_SZ /d "0" /f >nul 2>&1
+)
+for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v Mode') do @set "CurrentMode=%%z" >nul 2>&1
+goto CheckVPNStatus
+:continuewithdefaultbehavior
 cls 
 echo ... Welcome %username% to DaddyMadu Automated VPN and VOIP ... 
 echo. 
+echo ... current active VPN Mode: %CurrentMode% ...
+echo.
 Echo v%CurrentVersion% 
 echo Setting up DaddyMadu Auotmated VPN...
 echo>%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1  if (Get-Module -ListAvailable -Name "PackageManagement") {
@@ -314,29 +363,19 @@ powershell Start-Sleep -s 1
 powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DisableAuthConfirmation.ps1 -Force -ea silentlycontinue | Out-Null"
 powershell -c "Remove-Item -Path %userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-AutomatedVPN.ps1 -Force -ea silentlycontinue | Out-Null"
 echo Setting VPN connection to accept split tunneling or not based on your choise...
+goto VPNforVOIP
 :CheckVPNStatus
 for /f "usebackq delims=" %%w in (` 
 powershell -NoProfile -ExecutionPolicy Bypass -c "$vpnStatus = If ((rasdial | select-string 'VPN').count -eq 0) {'Disconnected'} else {'Online'}; $vpnStatus" 
 `) do set "VPNChecker=%%w"
 IF %VPNChecker% EQU Disconnected ( 
-goto VPNGLobalChoice 
+if %CurrentMode% EQU 2 (goto GlobalVPNonSYSTEM
+) else if %CurrentMode% EQU 1 (goto VPNforVOIP
+) else goto continuewithdefaultbehavior
 ) ELSE ( 
 rasphone -h "VPN"
 goto CheckVPNStatus 
 )
-:VPNGLobalChoice
-setlocal enableDelayedExpansion
-for /l %%N in (3 -1 1) do (
-  set /a "min=%%N/60, sec=%%N%%60, n-=1"
-  if !sec! lss 3 set sec=0!sec!
-  cls
-  choice /c:CN1 /n /m "Auto apply VPN ^for VOIP only in !min!:!sec! - Press N to Apply Now, or C to apply on GLOBAL system. " /t:1 /d:1
-  if not errorlevel 3 goto :break
-)
-cls
-echo auto apply VPN for VOIP only in 0:00 - Press N to Apply Now, or C to apply on GLOBAL system.
-:break
-if errorlevel 2 (goto VPNforVOIP) else goto GlobalVPNonSYSTEM
 :GlobalVPNonSYSTEM
 rasphone -d "VPN"
 timeout /t 2 /nobreak >nul
@@ -354,7 +393,7 @@ rasphone -d "VPN"
 Powershell Set-VpnConnection -Name "VPN" -SplitTunneling $True
 rasphone -h "VPN"
 rasphone -d "VPN"
-ECHO Starting Valorant Voip Routing...
+ECHO Starting Voip Routing...
 set ip="IP Address"
 rem set ip="IP Address"
 for /f "tokens=3 delims=: " %%I in ('netsh interface IPv4 show addresses "VPN" ^| findstr /C:%ip%') do set ip_address=%%I

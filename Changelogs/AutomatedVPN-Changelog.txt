@@ -1,4 +1,9 @@
 Changelog!
+Jan 11,2024
+- no script is lunching faster due to skippinng premium option
+- default value is 0 but you should set it to 1 for faster lunch after first setup
+- when having any issue please set vpn mode to 0 to reset the script, you can set it to 1 after relunch
+
 Dec 20,2023
 - Fixing missing package manager import module on windows 11 
 - fixing typo 
