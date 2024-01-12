@@ -51,7 +51,7 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.2.0" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.0" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" > nul
 if %ERRORLEVEL% EQU 1 (
@@ -77,7 +77,7 @@ goto ContinueVPNConnection
  goto ContinueVPNConnection
  ) ELSE (
 copy "%CurrentRunningScript%" "%ScriptMainFile%"
-timeout /t 3 /nobreak >nul
+timeout /t 2 /nobreak >nul
 powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%DesktopPath%\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
 start /b powershell -c "Remove-Item -Path '%CurrentRunningScript%' -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 )
@@ -115,7 +115,7 @@ goto checkifrunningfrombackupornot
 :checkifrunningfrombackupornot
 IF "%CurrentRunningScript%" EQU "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" ( 
 copy "%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat" "%ScriptsBackupFile%"
-timeout /t 5
+timeout /t 2
 echo %ScriptsBackupFile%
 echo.
 echo.
@@ -154,14 +154,14 @@ echo As something is BLOCKING script from downloading latest Version Avaliable!
 ECHO ============================================================================================= 
 echo Please Press ENTER KEY to try again! 
 ECHO ============================================================================================= 
-timeout /t 5 /nobreak >nul
+timeout /t 3 /nobreak >nul
 goto downloadupdatevpn 
 ) 
 :Continueaftervpnupdatedownloaded 
 powershell -NoProfile -ExecutionPolicy Bypass -c "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%DesktopPath%\Automated VPN.lnk'); $Shortcut.TargetPath = '%userprofile%\AppData\Local\Temp\dmtmp\DaddyMadu-VPN-VOIP.bat'; $Shortcut.Save()"
 cls 
 echo Update Completed Successfully! Trying to Relunch Script Again... 
-timeout /t 2 /nobreak >nul
+timeout /t 1 /nobreak >nul
 start /b powershell -c "Remove-Item -Path %ScriptsBackupFile% -Force -ea silentlycontinue | Out-Null" & start /b %ScriptMainFile%
 exit 
 goto Continueaftervpnupdatecheck
@@ -173,9 +173,9 @@ setlocal enableDelayedExpansion
 (Set LF=^
 %Null%
 )
-for /l %%N in (2 -1 1) do (
+for /l %%N in (1 -1 1) do (
   set /a "min=%%N/60, sec=%%N%%60, n-=1"
-  if !sec! lss 2 set sec=0!sec!
+  if !sec! lss 1 set sec=0!sec!
   cls
   choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue Now, or C to put your Premium DaddyMadu VPN subscription.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=!LF!Make Sure to add This Script to ANTIVIRUS Exclusion List and You HAVE INTERNET Avaliable.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= " /t:1 /d:1
   if not errorlevel 3 goto :break
@@ -221,9 +221,9 @@ setlocal enableDelayedExpansion
 (Set LF=^
 %Null%
 )
-for /l %%N in (2 -1 1) do (
+for /l %%N in (1 -1 1) do (
   set /a "min=%%N/60, sec=%%N%%60, n-=1"
-  if !sec! lss 2 set sec=0!sec!
+  if !sec! lss 1 set sec=0!sec!
   cls
   choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue with what you set before, or C to put your own default setting." /t:1 /d:1
   if not errorlevel 3 goto :break
@@ -382,15 +382,15 @@ goto CheckVPNStatus
 )
 :GlobalVPNonSYSTEM
 rasphone -d "VPN"
-timeout /t 2 /nobreak >nul
+timeout /t 1 /nobreak >nul
 netsh interface ipv4 set interface VPN metric=1
 timeout /t 1 /nobreak >nul
 Powershell Set-NetIPInterface -InterfaceAlias "VPN" -InterfaceMetric "1"
 echo Y | powershell Set-VpnConnection -Name "VPN" -SplitTunneling $False
 rasphone -h "VPN"
-timeout /t 2 /nobreak >nul
+timeout /t 1 /nobreak >nul
 rasphone -d "VPN"
-timeout /t 2 /nobreak >nul
+timeout /t 1 /nobreak >nul
 goto eof
 :VPNforVOIP
 rasphone -d "VPN"

@@ -1,4 +1,8 @@
 Changelog!
+Jan 12,2024
+- tighter wait times
+- improving overall script performance
+
 Jan 11,2024
 - no script is lunching faster due to skippinng premium option
 - default value is 0 but you should set it to 1 for faster lunch after first setup
