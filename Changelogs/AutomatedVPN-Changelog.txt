@@ -1,4 +1,7 @@
 Changelog!
+Jan 30,2024
+- updating website address to new domain.
+
 Jan 12,2024
 - tighter wait times
 - improving overall script performance
