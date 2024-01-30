@@ -51,7 +51,7 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.1" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.2" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" > nul
 if %ERRORLEVEL% EQU 1 (
@@ -200,7 +200,7 @@ set /p VPNusername=VPNUserName:
 set /p DecodedVPass=VPNPassword:
 cls
 (echo=$VPNServername ^= "VPN") > %userprofile%\DaddyMaduVPN.config
-(echo=$VPNServerAdress ^= "daddymadu.gg:5555") >> %userprofile%\DaddyMaduVPN.config
+(echo=$VPNServerAdress ^= "madu.gg:5555") >> %userprofile%\DaddyMaduVPN.config
 (echo=$VPNusername ^= "%VPNusername%") >> %userprofile%\DaddyMaduVPN.config
 for /f "usebackq delims=" %%b in (`
   powershell -NoProfile -ExecutionPolicy Bypass -c "$DecodedVPass=echo %DecodedVPass%; $Bytes = [System.Text.Encoding]::Unicode.GetBytes($DecodedVPass); $EncodedText =[Convert]::ToBase64String($Bytes); $EncodedText"

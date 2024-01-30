@@ -1,4 +1,7 @@
 Changelog!
+Jan 30,2024
+- updating website address to new domain.
+
 Dec 25,2023
 - Updating windows debloater links.
 
