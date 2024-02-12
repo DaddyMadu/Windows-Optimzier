@@ -1,4 +1,7 @@
 Changelog!
+Feb 12,2024
+- adding one more second for options to prevent skipping options
+
 Jan 30,2024
 - updating website address to new domain.
 

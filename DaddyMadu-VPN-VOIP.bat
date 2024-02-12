@@ -51,7 +51,7 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.2" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.3" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" > nul
 if %ERRORLEVEL% EQU 1 (
@@ -174,9 +174,9 @@ setlocal enableDelayedExpansion
 (Set LF=^
 %Null%
 )
-for /l %%N in (1 -1 1) do (
+for /l %%N in (2 -1 1) do (
   set /a "min=%%N/60, sec=%%N%%60, n-=1"
-  if !sec! lss 1 set sec=0!sec!
+  if !sec! lss 2 set sec=0!sec!
   cls
   choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue Now, or C to put your Premium DaddyMadu VPN subscription.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=!LF!Make Sure to add This Script to ANTIVIRUS Exclusion List and You HAVE INTERNET Avaliable.!LF!^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^= " /t:1 /d:1
   if not errorlevel 3 goto :break
@@ -222,9 +222,9 @@ setlocal enableDelayedExpansion
 (Set LF=^
 %Null%
 )
-for /l %%N in (1 -1 1) do (
+for /l %%N in (2 -1 1) do (
   set /a "min=%%N/60, sec=%%N%%60, n-=1"
-  if !sec! lss 1 set sec=0!sec!
+  if !sec! lss 2 set sec=0!sec!
   cls
   choice /c:CN1 /n /m "Continue in !min!:!sec! - Press N to Continue with what you set before, or C to put your own default setting." /t:1 /d:1
   if not errorlevel 3 goto :break
