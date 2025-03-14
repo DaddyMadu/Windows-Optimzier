@@ -51,7 +51,7 @@
  mode 200 
 title [ Daddy Madu ] Autmated VPN and VOIP! 
 color 1f 
-reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.3" /f >nul 2>&1 
+reg ADD "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "AutomatedVPN" /t REG_SZ /d "4.3.4" /f >nul 2>&1 
 for /f "tokens=3" %%z in ('reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v AutomatedVPN') do @set "CurrentVersion=%%z" 
 reg query "HKEY_CURRENT_USER\SOFTWARE\DM Windows Optimizer\Updater" /v "Mode" > nul
 if %ERRORLEVEL% EQU 1 (
@@ -413,6 +413,7 @@ route add 54.0.0.0 mask 255.0.0.0 %ip_address%
 route add 216.0.0.0 mask 255.0.0.0 %ip_address%
 route add 74.0.0.0 mask 255.0.0.0 %ip_address%
 route add 63.0.0.0 mask 255.0.0.0 %ip_address%
+route add 144.0.0.0 mask 255.0.0.0 %ip_address%
 route add 188.0.0.0 mask 255.0.0.0 %ip_address%
 ECHO ***********************DONE***********************
 goto eof
