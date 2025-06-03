@@ -1,5 +1,8 @@
 Changelog!
 
+June 3,2025
+- Adding new valorant voip server range
+
 March 14,2025
 - adding 1 extra ip range
 
